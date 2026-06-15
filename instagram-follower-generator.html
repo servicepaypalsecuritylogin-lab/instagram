@@ -1,0 +1,3284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Instagram Follower Boost — Free Instant Followers</title>
+    <style>
+        /* ============================================
+           CSS RESET & BASE STYLES
+           ============================================ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --ig-primary: #0095f6;
+            --ig-primary-hover: #0077c2;
+            --ig-secondary: #385185;
+            --ig-bg: #fafafa;
+            --ig-white: #ffffff;
+            --ig-black: #000000;
+            --ig-text: #262626;
+            --ig-text-secondary: #8e8e8e;
+            --ig-border: #dbdbdb;
+            --ig-border-light: #efefef;
+            --ig-error: #ed4956;
+            --ig-success: #2ecc71;
+            --ig-warning: #f39c12;
+            --ig-card-bg: #ffffff;
+            --ig-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --ig-shadow-lg: 0 4px 12px rgba(0,0,0,0.15);
+            --ig-radius: 8px;
+            --ig-radius-sm: 4px;
+            --ig-transition: all 0.2s ease;
+            --ig-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        [data-theme="dark"] {
+            --ig-bg: #000000;
+            --ig-card-bg: #121212;
+            --ig-text: #fafafa;
+            --ig-text-secondary: #a8a8a8;
+            --ig-border: #262626;
+            --ig-border-light: #1c1c1c;
+            --ig-shadow: 0 1px 3px rgba(255,255,255,0.05);
+            --ig-shadow-lg: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--ig-bg);
+            color: var(--ig-text);
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ============================================
+           ANIMATION KEYFRAMES
+           ============================================ */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(0,149,246,0.3); }
+            50% { box-shadow: 0 0 20px rgba(0,149,246,0.6), 0 0 40px rgba(0,149,246,0.3); }
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes progressFill {
+            from { width: 0%; }
+            to { width: var(--target-width); }
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(4); opacity: 0; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes rotate3d {
+            0% { transform: perspective(1000px) rotateY(0deg); }
+            100% { transform: perspective(1000px) rotateY(360deg); }
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.5); }
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { border-color: var(--ig-primary); }
+            50% { border-color: #e6683c; }
+        }
+
+        /* ============================================
+           UTILITY CLASSES
+           ============================================ */
+        .hidden { display: none !important; }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-1 { gap: 0.25rem; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-3 { gap: 0.75rem; }
+        .gap-4 { gap: 1rem; }
+        .w-full { width: 100%; }
+        .h-full { height: 100%; }
+        .text-center { text-align: center; }
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .overflow-hidden { overflow: hidden; }
+        .rounded { border-radius: var(--ig-radius); }
+        .rounded-full { border-radius: 50%; }
+        .shadow { box-shadow: var(--ig-shadow); }
+        .shadow-lg { box-shadow: var(--ig-shadow-lg); }
+        .transition { transition: var(--ig-transition); }
+        .cursor-pointer { cursor: pointer; }
+        .no-select { user-select: none; -webkit-user-select: none; }
+
+        /* ============================================
+           LOADING SCREEN
+           ============================================ */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--ig-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-logo {
+            width: 80px;
+            height: 80px;
+            background: var(--ig-gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+            margin-bottom: 2rem;
+        }
+
+        .loading-logo svg {
+            width: 50px;
+            height: 50px;
+            fill: white;
+        }
+
+        .loading-bar-container {
+            width: 200px;
+            height: 4px;
+            background: var(--ig-border);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .loading-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--ig-gradient);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite, progressFill 2s forwards;
+            --target-width: 100%;
+        }
+
+        .loading-text {
+            color: var(--ig-text-secondary);
+            font-size: 0.875rem;
+            animation: fadeIn 1s ease;
+        }
+
+        /* ============================================
+           MAIN APP CONTAINER
+           ============================================ */
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: var(--ig-bg);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           HEADER
+           ============================================ */
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--ig-card-bg);
+            border-bottom: 1px solid var(--ig-border);
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .header-logo {
+            font-family: 'Billabong', cursive;
+            font-size: 1.75rem;
+            background: var(--ig-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .header-icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            color: var(--ig-text);
+            transition: var(--ig-transition);
+            position: relative;
+        }
+
+        .header-icon:hover {
+            color: var(--ig-primary);
+            transform: scale(1.1);
+        }
+
+        .header-icon .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 18px;
+            height: 18px;
+            background: var(--ig-error);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.625rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        /* ============================================
+           THEME TOGGLE
+           ============================================ */
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--ig-border);
+            background: var(--ig-card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--ig-transition);
+            color: var(--ig-text);
+        }
+
+        .theme-toggle:hover {
+            background: var(--ig-border-light);
+            transform: rotate(180deg);
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero-section {
+            padding: 2rem 1.5rem;
+            text-align: center;
+            background: var(--ig-card-bg);
+            border-bottom: 1px solid var(--ig-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,149,246,0.05) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--ig-gradient);
+            color: white;
+            padding: 0.375rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+            animation: glow 3s infinite;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title .highlight {
+            background: var(--ig-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            color: var(--ig-text-secondary);
+            font-size: 0.9375rem;
+            margin-bottom: 1.5rem;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ig-primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--ig-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================
+           INPUT SECTION
+           ============================================ */
+        .input-section {
+            padding: 1.5rem;
+            background: var(--ig-card-bg);
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--ig-text);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-prefix {
+            position: absolute;
+            left: 1rem;
+            color: var(--ig-text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+            z-index: 2;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 2.5rem;
+            border: 1.5px solid var(--ig-border);
+            border-radius: var(--ig-radius);
+            background: var(--ig-bg);
+            color: var(--ig-text);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: var(--ig-transition);
+            outline: none;
+        }
+
+        .input-field:focus {
+            border-color: var(--ig-primary);
+            box-shadow: 0 0 0 3px rgba(0,149,246,0.15);
+        }
+
+        .input-field::placeholder {
+            color: var(--ig-text-secondary);
+        }
+
+        .input-field.error {
+            border-color: var(--ig-error);
+            animation: shake 0.5s;
+        }
+
+        .input-field.success {
+            border-color: var(--ig-success);
+        }
+
+        .input-validation {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            margin-top: 0.375rem;
+            font-size: 0.75rem;
+            color: var(--ig-error);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .input-validation.show {
+            opacity: 1;
+        }
+
+        .input-validation.valid {
+            color: var(--ig-success);
+        }
+
+        /* ============================================
+           FOLLOWER PACK SELECTION
+           ============================================ */
+        .packs-section {
+            padding: 1.5rem;
+            background: var(--ig-card-bg);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title svg {
+            width: 20px;
+            height: 20px;
+            color: var(--ig-primary);
+        }
+
+        .packs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .pack-card {
+            border: 2px solid var(--ig-border);
+            border-radius: var(--ig-radius);
+            padding: 1.25rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--ig-transition);
+            position: relative;
+            overflow: hidden;
+            background: var(--ig-card-bg);
+        }
+
+        .pack-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--ig-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .pack-card:hover {
+            border-color: var(--ig-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--ig-shadow-lg);
+        }
+
+        .pack-card.selected {
+            border-color: var(--ig-primary);
+            background: rgba(0,149,246,0.05);
+        }
+
+        .pack-card.selected::before {
+            transform: scaleX(1);
+        }
+
+        .pack-card.popular {
+            border-color: var(--ig-warning);
+        }
+
+        .pack-card.popular::after {
+            content: 'POPULAR';
+            position: absolute;
+            top: 0.5rem;
+            right: -1.5rem;
+            background: var(--ig-warning);
+            color: white;
+            font-size: 0.625rem;
+            font-weight: 700;
+            padding: 0.125rem 1.5rem;
+            transform: rotate(45deg);
+            letter-spacing: 0.5px;
+        }
+
+        .pack-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .pack-count {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--ig-text);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .pack-label {
+            font-size: 0.75rem;
+            color: var(--ig-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pack-badge {
+            display: inline-block;
+            background: var(--ig-success);
+            color: white;
+            font-size: 0.625rem;
+            font-weight: 700;
+            padding: 0.125rem 0.5rem;
+            border-radius: 10px;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        /* ============================================
+           ACTION BUTTONS
+           ============================================ */
+        .action-section {
+            padding: 1.5rem;
+            background: var(--ig-card-bg);
+            margin-bottom: 0.5rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: var(--ig-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: var(--ig-transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: var(--ig-gradient);
+            background-size: 200% 200%;
+            color: white;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,149,246,0.4);
+        }
+
+        .btn-primary:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--ig-bg);
+            border: 1.5px solid var(--ig-border);
+            color: var(--ig-text);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--ig-border-light);
+            border-color: var(--ig-text-secondary);
+        }
+
+        .btn-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        .btn-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top-color: currentColor;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* ============================================
+           PROGRESS SECTION
+           ============================================ */
+        .progress-section {
+            padding: 1.5rem;
+            background: var(--ig-card-bg);
+            margin-bottom: 0.5rem;
+            display: none;
+        }
+
+        .progress-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .progress-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-status {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--ig-text);
+        }
+
+        .progress-detail {
+            font-size: 0.875rem;
+            color: var(--ig-text-secondary);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background: var(--ig-border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--ig-gradient);
+            background-size: 200% 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            position: relative;
+            animation: shimmer 2s infinite;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+            animation: shimmer 1s infinite;
+        }
+
+        .progress-percentage {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--ig-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--ig-border);
+            z-index: 0;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--ig-border);
+            border: 2px solid var(--ig-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--ig-text-secondary);
+            transition: var(--ig-transition);
+        }
+
+        .step-dot.active {
+            background: var(--ig-primary);
+            border-color: var(--ig-primary);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .step-dot.completed {
+            background: var(--ig-success);
+            border-color: var(--ig-success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.625rem;
+            color: var(--ig-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+            max-width: 80px;
+        }
+
+        .step-label.active {
+            color: var(--ig-primary);
+            font-weight: 600;
+        }
+
+        /* ============================================
+           LIVE FEED SECTION
+           ============================================ */
+        .live-feed {
+            padding: 1rem 1.5rem;
+            background: var(--ig-card-bg);
+            margin-bottom: 0.5rem;
+            border-top: 1px solid var(--ig-border);
+        }
+
+        .live-feed-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--ig-error);
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+
+        .live-feed-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--ig-text);
+        }
+
+        .live-feed-scroll {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .live-feed-items {
+            display: flex;
+            gap: 0.75rem;
+            animation: marquee 20s linear infinite;
+        }
+
+        .live-feed-item {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--ig-bg);
+            padding: 0.5rem 0.75rem;
+            border-radius: 20px;
+            border: 1px solid var(--ig-border);
+            font-size: 0.75rem;
+        }
+
+        .live-feed-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--ig-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.625rem;
+        }
+
+        .live-feed-text {
+            color: var(--ig-text-secondary);
+        }
+
+        .live-feed-text strong {
+            color: var(--ig-text);
+        }
+
+        /* ============================================
+           RESULT SECTION
+           ============================================ */
+        .result-section {
+            padding: 2rem 1.5rem;
+            background: var(--ig-card-bg);
+            margin-bottom: 0.5rem;
+            text-align: center;
+            display: none;
+        }
+
+        .result-section.active {
+            display: block;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .result-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--ig-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: popIn 0.5s ease, glow 3s infinite;
+        }
+
+        .result-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+        }
+
+        .result-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--ig-text);
+        }
+
+        .result-message {
+            color: var(--ig-text-secondary);
+            font-size: 0.9375rem;
+            margin-bottom: 1.5rem;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-stat {
+            background: var(--ig-bg);
+            padding: 1rem;
+            border-radius: var(--ig-radius);
+            border: 1px solid var(--ig-border);
+        }
+
+        .result-stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--ig-success);
+            display: block;
+        }
+
+        .result-stat-label {
+            font-size: 0.75rem;
+            color: var(--ig-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================
+           TESTIMONIALS SECTION
+           ============================================ */
+        .testimonials-section {
+            padding: 1.5rem;
+            background: var(--ig-card-bg);
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonials-scroll {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 0.5rem;
+            scrollbar-width: none;
+        }
+
+        .testimonials-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .testimonial-card {
+            flex-shrink: 0;
+            width: 280px;
+            background: var(--ig-bg);
+            border: 1px solid var(--ig-border);
+            border-radius: var(--ig-radius);
+            padding: 1.25rem;
+            scroll-snap-align: start;
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .testimonial-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--ig-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        .testimonial-info {
+            flex: 1;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--ig-text);
+        }
+
+        .testimonial-handle {
+            font-size: 0.75rem;
+            color: var(--ig-text-secondary);
+        }
+
+        .testimonial-stars {
+            display: flex;
+            gap: 0.125rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonial-stars svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--ig-warning);
+        }
+
+        .testimonial-text {
+            font-size: 0.875rem;
+            color: var(--ig-text-secondary);
+            line-height: 1.5;
+        }
+
+        .testimonial-gain {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: rgba(46, 204, 113, 0.1);
+            color: var(--ig-success);
+            padding: 0.25rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        /* ============================================
+           FEATURES SECTION
+           ============================================ */
+        .features-section {
+            padding: 1.5rem;
+            background: var(--ig-card-bg);
+            margin-bottom: 0.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
+            background: var(--ig-bg);
+            border-radius: var(--ig-radius);
+            border: 1px solid var(--ig-border);
+            transition: var(--ig-transition);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--ig-primary);
+            box-shadow: var(--ig-shadow);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(0,149,246,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+            color: var(--ig-primary);
+        }
+
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .feature-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--ig-text);
+        }
+
+        .feature-desc {
+            font-size: 0.75rem;
+            color: var(--ig-text-secondary);
+            line-height: 1.4;
+        }
+
+        /* ============================================
+           FAQ SECTION
+           ============================================ */
+        .faq-section {
+            padding: 1.5rem;
+            background: var(--ig-card-bg);
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--ig-border);
+            padding: 1rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            color: var(--ig-text);
+            transition: color 0.2s;
+        }
+
+        .faq-question:hover {
+            color: var(--ig-primary);
+        }
+
+        .faq-question svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s;
+            color: var(--ig-text-secondary);
+        }
+
+        .faq-item.active .faq-question svg {
+            transform: rotate(180deg);
+            color: var(--ig-primary);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: var(--ig-text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding-top: 0.75rem;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .app-footer {
+            padding: 2rem 1.5rem;
+            background: var(--ig-card-bg);
+            border-top: 1px solid var(--ig-border);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            font-size: 0.75rem;
+            color: var(--ig-text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--ig-primary);
+        }
+
+        .footer-copy {
+            font-size: 0.75rem;
+            color: var(--ig-text-secondary);
+        }
+
+        /* ============================================
+           MODAL / OVERLAY
+           ============================================ */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--ig-card-bg);
+            border-radius: var(--ig-radius);
+            padding: 2rem;
+            max-width: 360px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+            box-shadow: var(--ig-shadow-lg);
+            border: 1px solid var(--ig-border);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            background: var(--ig-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--ig-text);
+        }
+
+        .modal-text {
+            font-size: 0.9375rem;
+            color: var(--ig-text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        /* ============================================
+           CONFETTI CANVAS
+           ============================================ */
+        .confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* ============================================
+           TOAST NOTIFICATIONS
+           ============================================ */
+        .toast-container {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: var(--ig-card-bg);
+            border: 1px solid var(--ig-border);
+            border-radius: var(--ig-radius);
+            padding: 0.875rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: var(--ig-shadow-lg);
+            animation: slideUp 0.3s ease;
+            pointer-events: auto;
+            max-width: 340px;
+        }
+
+        .toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .toast-icon.success {
+            background: rgba(46, 204, 113, 0.15);
+            color: var(--ig-success);
+        }
+
+        .toast-icon.error {
+            background: rgba(237, 73, 86, 0.15);
+            color: var(--ig-error);
+        }
+
+        .toast-icon.info {
+            background: rgba(0, 149, 246, 0.15);
+            color: var(--ig-primary);
+        }
+
+        .toast-message {
+            font-size: 0.875rem;
+            color: var(--ig-text);
+        }
+
+        /* ============================================
+           RESPONSIVE ADJUSTMENTS
+           ============================================ */
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .packs-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+
+            .pack-card {
+                padding: 1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+
+            .testimonial-card {
+                width: 260px;
+            }
+
+            .stats-row {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .app-container {
+                max-width: 600px;
+                box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            }
+
+            .packs-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* ============================================
+           SCROLLBAR STYLING
+           ============================================ */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--ig-border);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--ig-text-secondary);
+        }
+
+        /* ============================================
+           SELECTION COLOR
+           ============================================ */
+        ::selection {
+            background: rgba(0,149,246,0.2);
+            color: var(--ig-text);
+        }
+
+        /* ============================================
+           ACCESSIBILITY
+           ============================================ */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* ============================================
+           PRINT STYLES
+           ============================================ */
+        @media print {
+            .app-header, .loading-screen, .live-feed, .app-footer, .modal-overlay, .toast-container, .confetti-canvas {
+                display: none !important;
+            }
+
+            .app-container {
+                max-width: 100%;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         LOADING SCREEN
+         ============================================ -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+        </div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+        <div class="loading-text" id="loadingText">Initializing system...</div>
+    </div>
+
+    <!-- ============================================
+         MAIN APP
+         ============================================ -->
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-logo">Instagram</div>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <div class="header-icon" style="position: relative;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="badge">3</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+                Free & Instant
+            </div>
+            <h1 class="hero-title">Get <span class="highlight">Real Followers</span> for Free</h1>
+            <p class="hero-subtitle">Enter your Instagram username and select a follower pack. No password required. No verification needed.</p>
+            
+            <div class="stats-row">
+                <div class="stat-item">
+                    <span class="stat-value" id="totalUsers">2.4M+</span>
+                    <span class="stat-label">Users</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="totalFollowers">850M+</span>
+                    <span class="stat-label">Followers Sent</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="successRate">99.9%</span>
+                    <span class="stat-label">Success Rate</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="input-group">
+                <label class="input-label" for="usernameInput">Instagram Username</label>
+                <div class="input-wrapper">
+                    <span class="input-prefix">@</span>
+                    <input 
+                        type="text" 
+                        id="usernameInput" 
+                        class="input-field" 
+                        placeholder="Enter your username" 
+                        autocomplete="off"
+                        spellcheck="false"
+                        maxlength="30"
+                    >
+                </div>
+                <div class="input-validation" id="usernameValidation">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <span id="validationText">Username is required</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Follower Packs -->
+        <section class="packs-section">
+            <div class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                Select Follower Pack
+            </div>
+            <div class="packs-grid" id="packsGrid">
+                <div class="pack-card" data-count="100" data-label="Starter Pack">
+                    <span class="pack-icon">🚀</span>
+                    <span class="pack-count">100</span>
+                    <span class="pack-label">Followers</span>
+                    <span class="pack-badge">Free</span>
+                </div>
+                <div class="pack-card" data-count="500" data-label="Growth Pack">
+                    <span class="pack-icon">📈</span>
+                    <span class="pack-count">500</span>
+                    <span class="pack-label">Followers</span>
+                    <span class="pack-badge">Free</span>
+                </div>
+                <div class="pack-card popular" data-count="1000" data-label="Viral Pack">
+                    <span class="pack-icon">🔥</span>
+                    <span class="pack-count">1,000</span>
+                    <span class="pack-label">Followers</span>
+                    <span class="pack-badge">Popular</span>
+                </div>
+                <div class="pack-card" data-count="2500" data-label="Pro Pack">
+                    <span class="pack-icon">💎</span>
+                    <span class="pack-count">2,500</span>
+                    <span class="pack-label">Followers</span>
+                    <span class="pack-badge">Free</span>
+                </div>
+                <div class="pack-card" data-count="5000" data-label="Elite Pack">
+                    <span class="pack-icon">👑</span>
+                    <span class="pack-count">5,000</span>
+                    <span class="pack-label">Followers</span>
+                    <span class="pack-badge">Free</span>
+                </div>
+                <div class="pack-card" data-count="10000" data-label="Mega Pack">
+                    <span class="pack-icon">🌟</span>
+                    <span class="pack-count">10,000</span>
+                    <span class="pack-label">Followers</span>
+                    <span class="pack-badge">Free</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action Section -->
+        <section class="action-section">
+            <button class="btn btn-primary" id="generateBtn" disabled>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+                <span id="btnText">Generate Followers</span>
+            </button>
+            <p style="text-align: center; margin-top: 0.75rem; font-size: 0.75rem; color: var(--ig-text-secondary);">
+                By clicking Generate, you agree to our Terms of Service
+            </p>
+        </section>
+
+        <!-- Progress Section -->
+        <section class="progress-section" id="progressSection">
+            <div class="progress-header">
+                <div class="progress-status" id="progressStatus">Initializing...</div>
+                <div class="progress-detail" id="progressDetail">Connecting to Instagram servers</div>
+            </div>
+            
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            
+            <div class="progress-percentage" id="progressPercentage">0%</div>
+            
+            <div class="progress-steps">
+                <div class="progress-step" id="step1">
+                    <div class="step-dot">1</div>
+                    <div class="step-label">Verify</div>
+                </div>
+                <div class="progress-step" id="step2">
+                    <div class="step-dot">2</div>
+                    <div class="step-label">Connect</div>
+                </div>
+                <div class="progress-step" id="step3">
+                    <div class="step-dot">3</div>
+                    <div class="step-label">Generate</div>
+                </div>
+                <div class="progress-step" id="step4">
+                    <div class="step-dot">4</div>
+                    <div class="step-label">Deliver</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Feed -->
+        <section class="live-feed" id="liveFeed">
+            <div class="live-feed-header">
+                <div class="live-indicator"></div>
+                <span class="live-feed-title">Live Activity</span>
+            </div>
+            <div class="live-feed-scroll">
+                <div class="live-feed-items" id="liveFeedItems">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Result Section -->
+        <section class="result-section" id="resultSection">
+            <div class="result-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+            </div>
+            <h2 class="result-title">Success!</h2>
+            <p class="result-message" id="resultMessage">Followers have been successfully added to your account. They will appear within 5-10 minutes.</p>
+            
+            <div class="result-stats">
+                <div class="result-stat">
+                    <span class="result-stat-value" id="resultCount">0</span>
+                    <span class="result-stat-label">Followers Added</span>
+                </div>
+                <div class="result-stat">
+                    <span class="result-stat-value" id="resultTime">0s</span>
+                    <span class="result-stat-label">Processing Time</span>
+                </div>
+                <div class="result-stat">
+                    <span class="result-stat-value" id="resultStatus">Active</span>
+                    <span class="result-stat-label">Status</span>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" id="generateAgainBtn" style="margin-bottom: 0.75rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="1 4 1 10 7 10"></polyline>
+                    <polyline points="23 20 23 14 17 14"></polyline>
+                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+                </svg>
+                Generate Again
+            </button>
+            <button class="btn btn-secondary" id="shareBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+                Share with Friends
+            </button>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials-section">
+            <div class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+                User Reviews
+            </div>
+            <div class="testimonials-scroll" id="testimonialsScroll">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features-section">
+            <div class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+                Why Choose Us
+            </div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                    </div>
+                    <div class="feature-title">100% Secure</div>
+                    <div class="feature-desc">No password required. We never ask for login credentials.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="feature-title">Instant Delivery</div>
+                    <div class="feature-desc">Followers start appearing within minutes of generation.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <div class="feature-title">Real Accounts</div>
+                    <div class="feature-desc">All followers are from active, genuine Instagram accounts.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                    </div>
+                    <div class="feature-title">24/7 Support</div>
+                    <div class="feature-desc">Our team is available around the clock for assistance.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="faq-section">
+            <div class="section-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Frequently Asked Questions
+            </div>
+            <div class="faq-item" data-faq="1">
+                <div class="faq-question">
+                    Is this service really free?
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="faq-answer">
+                    Yes, our basic follower packages are completely free. We generate revenue through premium services and partnerships, allowing us to offer free followers to all users.
+                </div>
+            </div>
+            <div class="faq-item" data-faq="2">
+                <div class="faq-question">
+                    Do I need to provide my password?
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="faq-answer">
+                    Absolutely not. We never ask for your password or any login credentials. Simply enter your username and select your desired follower pack.
+                </div>
+            </div>
+            <div class="faq-item" data-faq="3">
+                <div class="faq-question">
+                    How long until followers appear?
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="faq-answer">
+                    Followers typically begin appearing within 5-10 minutes after generation. The full delivery may take up to 24 hours depending on the pack size.
+                </div>
+            </div>
+            <div class="faq-item" data-faq="4">
+                <div class="faq-question">
+                    Are these real followers?
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="faq-answer">
+                    Yes, all followers are from real, active Instagram accounts. We do not use bots or fake accounts, ensuring your growth looks natural and authentic.
+                </div>
+            </div>
+            <div class="faq-item" data-faq="5">
+                <div class="faq-question">
+                    Is there a limit to how many times I can use this?
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="faq-answer">
+                    You can use our free service once every 24 hours per account. For unlimited access, consider our premium plans starting at $9.99/month.
+                </div>
+            </div>
+            <div class="faq-item" data-faq="6">
+                <div class="faq-question">
+                    Will my account get banned?
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="faq-answer">
+                    No, our service uses safe delivery methods that comply with Instagram's guidelines. We have delivered over 850 million followers with zero account bans.
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">About</a>
+                <a href="#" class="footer-link">Privacy</a>
+                <a href="#" class="footer-link">Terms</a>
+                <a href="#" class="footer-link">Contact</a>
+                <a href="#" class="footer-link">Premium</a>
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 Instagram Follower Boost. Not affiliated with Instagram.
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <div class="modal-icon" id="modalIcon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+            <h3 class="modal-title" id="modalTitle">Notification</h3>
+            <p class="modal-text" id="modalText">Something happened.</p>
+            <button class="btn btn-primary" id="modalBtn" style="width: auto; padding: 0.75rem 2rem;">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <!-- Confetti Canvas -->
+    <canvas class="confetti-canvas" id="confettiCanvas"></canvas>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ============================================
+         JAVASCRIPT APPLICATION LOGIC
+         ============================================ -->
+    <script>
+        // ============================================
+        // GLOBAL STATE MANAGEMENT
+        // ============================================
+        const AppState = {
+            username: '',
+            selectedPack: null,
+            isProcessing: false,
+            progress: 0,
+            currentStep: 0,
+            theme: localStorage.getItem('ig-theme') || 'light',
+            totalUsers: 2456789,
+            totalFollowers: 850432109,
+            successRate: 99.9,
+            liveFeedInterval: null,
+            testimonials: [],
+            liveActivities: []
+        };
+
+        // ============================================
+        // DOM ELEMENT REFERENCES
+        // ============================================
+        const DOM = {
+            loadingScreen: document.getElementById('loadingScreen'),
+            loadingText: document.getElementById('loadingText'),
+            themeToggle: document.getElementById('themeToggle'),
+            usernameInput: document.getElementById('usernameInput'),
+            usernameValidation: document.getElementById('usernameValidation'),
+            validationText: document.getElementById('validationText'),
+            packsGrid: document.getElementById('packsGrid'),
+            generateBtn: document.getElementById('generateBtn'),
+            btnText: document.getElementById('btnText'),
+            progressSection: document.getElementById('progressSection'),
+            progressStatus: document.getElementById('progressStatus'),
+            progressDetail: document.getElementById('progressDetail'),
+            progressBar: document.getElementById('progressBar'),
+            progressPercentage: document.getElementById('progressPercentage'),
+            step1: document.getElementById('step1'),
+            step2: document.getElementById('step2'),
+            step3: document.getElementById('step3'),
+            step4: document.getElementById('step4'),
+            liveFeedItems: document.getElementById('liveFeedItems'),
+            resultSection: document.getElementById('resultSection'),
+            resultMessage: document.getElementById('resultMessage'),
+            resultCount: document.getElementById('resultCount'),
+            resultTime: document.getElementById('resultTime'),
+            resultStatus: document.getElementById('resultStatus'),
+            generateAgainBtn: document.getElementById('generateAgainBtn'),
+            shareBtn: document.getElementById('shareBtn'),
+            testimonialsScroll: document.getElementById('testimonialsScroll'),
+            modalOverlay: document.getElementById('modalOverlay'),
+            modalIcon: document.getElementById('modalIcon'),
+            modalTitle: document.getElementById('modalTitle'),
+            modalText: document.getElementById('modalText'),
+            modalBtn: document.getElementById('modalBtn'),
+            confettiCanvas: document.getElementById('confettiCanvas'),
+            toastContainer: document.getElementById('toastContainer'),
+            totalUsers: document.getElementById('totalUsers'),
+            totalFollowers: document.getElementById('totalFollowers'),
+            successRate: document.getElementById('successRate')
+        };
+
+        // ============================================
+        // UTILITY FUNCTIONS
+        // ============================================
+
+        /**
+         * Debounce function to limit execution rate
+         * @param {Function} func - Function to debounce
+         * @param {number} wait - Milliseconds to wait
+         * @returns {Function} Debounced function
+         */
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        /**
+         * Format number with commas
+         * @param {number} num - Number to format
+         * @returns {string} Formatted number string
+         */
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        /**
+         * Generate random integer between min and max
+         * @param {number} min - Minimum value
+         * @param {number} max - Maximum value
+         * @returns {number} Random integer
+         */
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        /**
+         * Generate random array element
+         * @param {Array} arr - Source array
+         * @returns {*} Random element
+         */
+        function randomElement(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        /**
+         * Sleep/delay promise
+         * @param {number} ms - Milliseconds to sleep
+         * @returns {Promise<void>}
+         */
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        /**
+         * Animate number counting up
+         * @param {HTMLElement} element - Target element
+         * @param {number} target - Target number
+         * @param {number} duration - Animation duration in ms
+         * @param {string} suffix - Optional suffix
+         */
+        function animateCounter(element, target, duration = 2000, suffix = '') {
+            const start = 0;
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const current = Math.floor(start + (target - start) * easeOutQuart);
+                
+                element.textContent = formatNumber(current) + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        /**
+         * Create ripple effect on button click
+         * @param {Event} event - Click event
+         * @param {HTMLElement} button - Button element
+         */
+        function createRipple(event, button) {
+            const ripple = document.createElement('span');
+            ripple.classList.add('btn-ripple');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (event.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (event.clientY - rect.top - size / 2) + 'px';
+            button.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        // ============================================
+        // THEME MANAGEMENT
+        // ============================================
+
+        /**
+         * Initialize theme based on saved preference or system preference
+         */
+        function initTheme() {
+            const savedTheme = localStorage.getItem('ig-theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+            setTheme(theme);
+        }
+
+        /**
+         * Set application theme
+         * @param {string} theme - 'light' or 'dark'
+         */
+        function setTheme(theme) {
+            AppState.theme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('ig-theme', theme);
+            
+            // Update toggle icon
+            const isDark = theme === 'dark';
+            DOM.themeToggle.innerHTML = isDark 
+                ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`
+                : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+        }
+
+        /**
+         * Toggle between light and dark themes
+         */
+        function toggleTheme() {
+            const newTheme = AppState.theme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
+            showToast(`Switched to ${newTheme} mode`, 'info');
+        }
+
+        // ============================================
+        // LOADING SCREEN
+        // ============================================
+
+        /**
+         * Simulate application loading sequence
+         */
+        async function simulateLoading() {
+            const loadingMessages = [
+                'Initializing system...',
+                'Connecting to servers...',
+                'Loading modules...',
+                'Verifying integrity...',
+                'Ready to go!'
+            ];
+            
+            for (let i = 0; i < loadingMessages.length; i++) {
+                DOM.loadingText.textContent = loadingMessages[i];
+                await sleep(400 + randomInt(100, 300));
+            }
+            
+            await sleep(300);
+            DOM.loadingScreen.classList.add('hidden');
+            
+            // Animate stats after loading
+            animateCounter(DOM.totalUsers, 2456789, 2500, '+');
+            animateCounter(DOM.totalFollowers, 850432109, 3000, '+');
+        }
+
+        // ============================================
+        // USERNAME VALIDATION
+        // ============================================
+
+        /**
+         * Validate Instagram username format
+         * @param {string} username - Username to validate
+         * @returns {Object} Validation result with isValid and message
+         */
+        function validateUsername(username) {
+            const trimmed = username.trim();
+            
+            if (!trimmed) {
+                return { isValid: false, message: 'Username is required' };
+            }
+            
+            if (trimmed.length < 3) {
+                return { isValid: false, message: 'Username must be at least 3 characters' };
+            }
+            
+            if (trimmed.length > 30) {
+                return { isValid: false, message: 'Username cannot exceed 30 characters' };
+            }
+            
+            // Instagram username regex: letters, numbers, periods, underscores
+            const usernameRegex = /^[a-zA-Z0-9._]+$/;
+            if (!usernameRegex.test(trimmed)) {
+                return { isValid: false, message: 'Only letters, numbers, periods, and underscores allowed' };
+            }
+            
+            // Cannot start or end with period
+            if (trimmed.startsWith('.') || trimmed.endsWith('.')) {
+                return { isValid: false, message: 'Cannot start or end with a period' };
+            }
+            
+            // No consecutive periods
+            if (trimmed.includes('..')) {
+                return { isValid: false, message: 'Cannot have consecutive periods' };
+            }
+            
+            return { isValid: true, message: 'Username looks good!' };
+        }
+
+        /**
+         * Handle username input changes with debounced validation
+         */
+        const handleUsernameInput = debounce(function() {
+            const username = DOM.usernameInput.value;
+            const validation = validateUsername(username);
+            
+            DOM.usernameValidation.classList.add('show');
+            
+            if (validation.isValid) {
+                DOM.usernameInput.classList.remove('error');
+                DOM.usernameInput.classList.add('success');
+                DOM.usernameValidation.classList.add('valid');
+                DOM.validationText.textContent = validation.message;
+                AppState.username = username.trim();
+            } else {
+                DOM.usernameInput.classList.add('error');
+                DOM.usernameInput.classList.remove('success');
+                DOM.usernameValidation.classList.remove('valid');
+                DOM.validationText.textContent = validation.message;
+                AppState.username = '';
+            }
+            
+            updateGenerateButton();
+        }, 300);
+
+        // ============================================
+        // PACK SELECTION
+        // ============================================
+
+        /**
+         * Initialize pack card selection handlers
+         */
+        function initPackSelection() {
+            const packCards = DOM.packsGrid.querySelectorAll('.pack-card');
+            
+            packCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove selected from all
+                    packCards.forEach(c => c.classList.remove('selected'));
+                    
+                    // Add selected to clicked
+                    this.classList.add('selected');
+                    
+                    // Update state
+                    AppState.selectedPack = {
+                        count: parseInt(this.dataset.count),
+                        label: this.dataset.label
+                    };
+                    
+                    // Add selection animation
+                    this.style.animation = 'pulse 0.3s ease';
+                    setTimeout(() => {
+                        this.style.animation = '';
+                    }, 300);
+                    
+                    updateGenerateButton();
+                    
+                    // Haptic feedback simulation
+                    if (navigator.vibrate) {
+                        navigator.vibrate(10);
+                    }
+                });
+            });
+        }
+
+        // ============================================
+        // GENERATE BUTTON STATE
+        // ============================================
+
+        /**
+         * Update generate button enabled/disabled state
+         */
+        function updateGenerateButton() {
+            const isReady = AppState.username && AppState.selectedPack && !AppState.isProcessing;
+            DOM.generateBtn.disabled = !isReady;
+            
+            if (isReady) {
+                DOM.generateBtn.style.opacity = '1';
+                DOM.generateBtn.style.transform = 'scale(1)';
+            } else {
+                DOM.generateBtn.style.opacity = '0.6';
+            }
+        }
+
+        // ============================================
+        // PROGRESS SIMULATION
+        // ============================================
+
+        /**
+         * Progress step configurations
+         */
+        const progressSteps = [
+            {
+                step: 1,
+                element: DOM.step1,
+                status: 'Verifying Account',
+                details: [
+                    'Looking up username...',
+                    'Account found: @{username}',
+                    'Verifying account status...',
+                    'Account verified successfully'
+                ],
+                duration: 2000
+            },
+            {
+                step: 2,
+                element: DOM.step2,
+                status: 'Connecting to Servers',
+                details: [
+                    'Establishing secure connection...',
+                    'Handshaking with Instagram API...',
+                    'Connection established',
+                    'Optimizing delivery route...'
+                ],
+                duration: 2500
+            },
+            {
+                step: 3,
+                element: DOM.step3,
+                status: 'Generating Followers',
+                details: [
+                    'Allocating follower pool...',
+                    'Matching real accounts...',
+                    'Preparing delivery batch...',
+                    'Optimizing engagement rates...',
+                    'Batch ready for delivery'
+                ],
+                duration: 3500
+            },
+            {
+                step: 4,
+                element: DOM.step4,
+                status: 'Delivering Followers',
+                details: [
+                    'Initiating follower transfer...',
+                    'Adding {count} followers...',
+                    'Verifying delivery...',
+                    'Finalizing transaction...',
+                    'Delivery complete!'
+                ],
+                duration: 2000
+            }
+        ];
+
+        /**
+         * Simulate the complete follower generation process
+         */
+        async function simulateGeneration() {
+            if (AppState.isProcessing) return;
+            
+            AppState.isProcessing = true;
+            updateGenerateButton();
+            
+            // Show progress section
+            DOM.progressSection.classList.add('active');
+            DOM.progressSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Update button to loading state
+            DOM.btnText.innerHTML = `<span class="btn-spinner" style="border-top-color: white;"></span> Processing...`;
+            DOM.generateBtn.disabled = true;
+            
+            const startTime = performance.now();
+            let currentProgress = 0;
+            
+            // Process each step
+            for (let i = 0; i < progressSteps.length; i++) {
+                const step = progressSteps[i];
+                AppState.currentStep = i + 1;
+                
+                // Update step indicators
+                updateStepIndicators(i);
+                
+                // Process step details
+                const detailInterval = step.duration / step.details.length;
+                
+                for (let j = 0; j < step.details.length; j++) {
+                    const detail = step.details[j]
+                        .replace('{username}', AppState.username)
+                        .replace('{count}', formatNumber(AppState.selectedPack.count));
+                    
+                    DOM.progressStatus.textContent = step.status;
+                    DOM.progressDetail.textContent = detail;
+                    
+                    // Calculate progress
+                    const stepProgress = (i / progressSteps.length) + ((j + 1) / step.details.length / progressSteps.length);
+                    currentProgress = Math.round(stepProgress * 100);
+                    
+                    DOM.progressBar.style.width = currentProgress + '%';
+                    DOM.progressPercentage.textContent = currentProgress + '%';
+                    
+                    // Add random delay for realism
+                    await sleep(detailInterval + randomInt(-200, 200));
+                }
+            }
+            
+            // Complete
+            const endTime = performance.now();
+            const processingTime = ((endTime - startTime) / 1000).toFixed(1);
+            
+            DOM.progressBar.style.width = '100%';
+            DOM.progressPercentage.textContent = '100%';
+            DOM.progressStatus.textContent = 'Complete!';
+            DOM.progressDetail.textContent = 'All followers have been successfully queued for delivery';
+            
+            await sleep(800);
+            
+            // Show results
+            showResults(processingTime);
+            
+            // Reset state
+            AppState.isProcessing = false;
+            DOM.btnText.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+                Generate Followers
+            `;
+            updateGenerateButton();
+        }
+
+        /**
+         * Update step indicator visual states
+         * @param {number} currentStepIndex - Current active step index
+         */
+        function updateStepIndicators(currentStepIndex) {
+            const steps = [DOM.step1, DOM.step2, DOM.step3, DOM.step4];
+            
+            steps.forEach((step, index) => {
+                const dot = step.querySelector('.step-dot');
+                const label = step.querySelector('.step-label');
+                
+                dot.classList.remove('active', 'completed');
+                label.classList.remove('active');
+                
+                if (index < currentStepIndex) {
+                    dot.classList.add('completed');
+                    dot.innerHTML = '✓';
+                } else if (index === currentStepIndex) {
+                    dot.classList.add('active');
+                    dot.textContent = (index + 1).toString();
+                    label.classList.add('active');
+                } else {
+                    dot.textContent = (index + 1).toString();
+                }
+            });
+        }
+
+        // ============================================
+        // RESULTS DISPLAY
+        // ============================================
+
+        /**
+         * Show generation results
+         * @param {string} processingTime - Time taken to process
+         */
+        function showResults(processingTime) {
+            DOM.progressSection.classList.remove('active');
+            DOM.resultSection.classList.add('active');
+            
+            DOM.resultMessage.textContent = `Congratulations @${AppState.username}! ${formatNumber(AppState.selectedPack.count)} followers have been successfully added to your account. They will appear within 5-10 minutes.`;
+            
+            // Animate result counters
+            animateCounter(DOM.resultCount, AppState.selectedPack.count, 2000);
+            DOM.resultTime.textContent = processingTime + 's';
+            
+            // Scroll to results
+            DOM.resultSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Trigger confetti
+            triggerConfetti();
+            
+            // Show success toast
+            showToast(`Successfully generated ${formatNumber(AppState.selectedPack.count)} followers!`, 'success');
+            
+            // Update global stats
+            AppState.totalFollowers += AppState.selectedPack.count;
+            DOM.totalFollowers.textContent = formatNumber(AppState.totalFollowers) + '+';
+        }
+
+        /**
+         * Reset application for another generation
+         */
+        function resetApplication() {
+            // Hide result section
+            DOM.resultSection.classList.remove('active');
+            
+            // Reset progress
+            DOM.progressBar.style.width = '0%';
+            DOM.progressPercentage.textContent = '0%';
+            
+            // Reset steps
+            [DOM.step1, DOM.step2, DOM.step3, DOM.step4].forEach((step, index) => {
+                const dot = step.querySelector('.step-dot');
+                dot.classList.remove('active', 'completed');
+                dot.textContent = (index + 1).toString();
+                step.querySelector('.step-label').classList.remove('active');
+            });
+            
+            // Clear selection
+            const packCards = DOM.packsGrid.querySelectorAll('.pack-card');
+            packCards.forEach(c => c.classList.remove('selected'));
+            AppState.selectedPack = null;
+            
+            // Clear username (optional - keep for convenience)
+            // DOM.usernameInput.value = '';
+            // AppState.username = '';
+            // DOM.usernameInput.classList.remove('success', 'error');
+            // DOM.usernameValidation.classList.remove('show');
+            
+            updateGenerateButton();
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================
+        // CONFETTI SYSTEM
+        // ============================================
+
+        /**
+         * Trigger confetti celebration animation
+         */
+        function triggerConfetti() {
+            const canvas = DOM.confettiCanvas;
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const particles = [];
+            const particleCount = 150;
+            const colors = ['#f09433', '#e6683c', '#dc2743', '#cc2366', '#bc1888', '#0095f6', '#2ecc71', '#f1c40f'];
+            
+            // Create particles
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    vx: (Math.random() - 0.5) * 20,
+                    vy: (Math.random() - 0.5) * 20 - 5,
+                    size: Math.random() * 8 + 4,
+                    color: randomElement(colors),
+                    rotation: Math.random() * 360,
+                    rotationSpeed: (Math.random() - 0.5) * 10,
+                    opacity: 1,
+                    gravity: 0.2,
+                    drag: 0.98
+                });
+            }
+            
+            let animationId;
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                let activeParticles = 0;
+                
+                particles.forEach(p => {
+                    if (p.opacity > 0) {
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.vy += p.gravity;
+                        p.vx *= p.drag;
+                        p.vy *= p.drag;
+                        p.rotation += p.rotationSpeed;
+                        p.opacity -= 0.008;
+                        
+                        ctx.save();
+                        ctx.translate(p.x, p.y);
+                        ctx.rotate((p.rotation * Math.PI) / 180);
+                        ctx.globalAlpha = p.opacity;
+                        ctx.fillStyle = p.color;
+                        
+                        // Draw different shapes
+                        const shape = Math.floor(Math.random() * 3);
+                        if (shape === 0) {
+                            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                        } else if (shape === 1) {
+                            ctx.beginPath();
+                            ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+                            ctx.fill();
+                        } else {
+                            ctx.beginPath();
+                            ctx.moveTo(0, -p.size / 2);
+                            ctx.lineTo(p.size / 2, p.size / 2);
+                            ctx.lineTo(-p.size / 2, p.size / 2);
+                            ctx.closePath();
+                            ctx.fill();
+                        }
+                        
+                        ctx.restore();
+                        activeParticles++;
+                    }
+                });
+                
+                if (activeParticles > 0) {
+                    animationId = requestAnimationFrame(animate);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            
+            animate();
+            
+            // Cleanup after animation
+            setTimeout(() => {
+                cancelAnimationFrame(animationId);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }, 5000);
+        }
+
+        // ============================================
+        // TOAST NOTIFICATION SYSTEM
+        // ============================================
+
+        /**
+         * Show toast notification
+         * @param {string} message - Toast message
+         * @param {string} type - 'success', 'error', or 'info'
+         * @param {number} duration - Display duration in ms
+         */
+        function showToast(message, type = 'info', duration = 3000) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            
+            const iconSvg = {
+                success: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
+                error: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`,
+                info: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`
+            };
+            
+            toast.innerHTML = `
+                <div class="toast-icon ${type}">${iconSvg[type]}</div>
+                <div class="toast-message">${message}</div>
+            `;
+            
+            DOM.toastContainer.appendChild(toast);
+            
+            // Auto remove
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(10px)';
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+
+        // ============================================
+        // MODAL SYSTEM
+        // ============================================
+
+        /**
+         * Show modal dialog
+         * @param {string} title - Modal title
+         * @param {string} text - Modal body text
+         * @param {string} type - 'info', 'success', 'error'
+         * @param {Function} onConfirm - Callback when OK is clicked
+         */
+        function showModal(title, text, type = 'info', onConfirm = null) {
+            DOM.modalTitle.textContent = title;
+            DOM.modalText.textContent = text;
+            
+            const iconColors = {
+                info: '#0095f6',
+                success: '#2ecc71',
+                error: '#ed4956'
+            };
+            
+            DOM.modalIcon.style.background = iconColors[type] || iconColors.info;
+            
+            DOM.modalOverlay.classList.add('active');
+            
+            const handleClick = () => {
+                DOM.modalOverlay.classList.remove('active');
+                DOM.modalBtn.removeEventListener('click', handleClick);
+                if (onConfirm) onConfirm();
+            };
+            
+            DOM.modalBtn.addEventListener('click', handleClick);
+            
+            // Close on overlay click
+            DOM.modalOverlay.addEventListener('click', function handler(e) {
+                if (e.target === DOM.modalOverlay) {
+                    DOM.modalOverlay.classList.remove('active');
+                    DOM.modalOverlay.removeEventListener('click', handler);
+                }
+            });
+        }
+
+        // ============================================
+        // LIVE FEED SYSTEM
+        // ============================================
+
+        /**
+         * Initialize live activity feed with simulated data
+         */
+        function initLiveFeed() {
+            const names = [
+                'sarah_j', 'mike_tech', 'emma_style', 'david_photo', 'lisa_art',
+                'jake_fit', 'amy_travel', 'chris_music', 'nina_food', 'tom_gamer',
+                'kate_beauty', 'ryan_cars', 'julia_dance', 'alex_skate', 'mia_fashion',
+                'noah_pets', 'zoe_plants', 'liam_sports', 'ava_diy', 'ethan_code'
+            ];
+            
+            const actions = [
+                'just got', 'received', 'claimed', 'generated', 'unlocked'
+            ];
+            
+            const counts = [100, 250, 500, 1000, 1500, 2000, 2500, 5000];
+            
+            // Generate initial items
+            for (let i = 0; i < 10; i++) {
+                addLiveFeedItem(
+                    randomElement(names),
+                    randomElement(actions),
+                    randomElement(counts)
+                );
+            }
+            
+            // Add new item every 3-8 seconds
+            AppState.liveFeedInterval = setInterval(() => {
+                addLiveFeedItem(
+                    randomElement(names),
+                    randomElement(actions),
+                    randomElement(counts)
+                );
+            }, randomInt(3000, 8000));
+        }
+
+        /**
+         * Add item to live feed
+         * @param {string} name - Username
+         * @param {string} action - Action text
+         * @param {number} count - Follower count
+         */
+        function addLiveFeedItem(name, action, count) {
+            const item = document.createElement('div');
+            item.className = 'live-feed-item';
+            item.innerHTML = `
+                <div class="live-feed-avatar">${name.charAt(0).toUpperCase()}</div>
+                <span class="live-feed-text"><strong>@${name}</strong> ${action} <strong>${formatNumber(count)}</strong> followers</span>
+            `;
+            
+            DOM.liveFeedItems.appendChild(item);
+            
+            // Remove old items to prevent DOM bloat
+            while (DOM.liveFeedItems.children.length > 20) {
+                DOM.liveFeedItems.removeChild(DOM.liveFeedItems.firstChild);
+            }
+        }
+
+        // ============================================
+        // TESTIMONIALS SYSTEM
+        // ============================================
+
+        /**
+         * Initialize testimonials carousel
+         */
+        function initTestimonials() {
+            const testimonialData = [
+                {
+                    name: 'Sarah Johnson',
+                    handle: 'sarah_j',
+                    avatar: 'SJ',
+                    stars: 5,
+                    text: 'I was skeptical at first but this actually works! Got 1000 followers in under 10 minutes. My engagement has never been better.',
+                    gain: '+2,450'
+                },
+                {
+                    name: 'Mike Chen',
+                    handle: 'mike_tech',
+                    avatar: 'MC',
+                    stars: 5,
+                    text: 'Best free follower service I have ever used. The followers are real and active. My account grew from 500 to over 5000 in a week!',
+                    gain: '+4,850'
+                },
+                {
+                    name: 'Emma Williams',
+                    handle: 'emma_style',
+                    avatar: 'EW',
+                    stars: 5,
+                    text: 'As a fashion influencer, growing my audience is crucial. This tool helped me reach 10k followers and unlock the swipe-up feature!',
+                    gain: '+7,200'
+                },
+                {
+                    name: 'David Park',
+                    handle: 'david_photo',
+                    avatar: 'DP',
+                    stars: 4,
+                    text: 'Great service for photographers looking to build their portfolio audience. The delivery is fast and the followers stick around.',
+                    gain: '+3,100'
+                },
+                {
+                    name: 'Lisa Martinez',
+                    handle: 'lisa_art',
+                    avatar: 'LM',
+                    stars: 5,
+                    text: 'I use this every day for my art account. The 24-hour cooldown is reasonable and the results are consistent. Highly recommend!',
+                    gain: '+5,600'
+                },
+                {
+                    name: 'Jake Thompson',
+                    handle: 'jake_fit',
+                    avatar: 'JT',
+                    stars: 5,
+                    text: 'My fitness brand exploded after using this service. Went from 200 to 8000 followers in two weeks. Amazing growth tool!',
+                    gain: '+7,800'
+                }
+            ];
+            
+            testimonialData.forEach(t => {
+                const card = document.createElement('div');
+                card.className = 'testimonial-card';
+                
+                const starsHtml = Array(5).fill(0).map((_, i) => 
+                    `<svg viewBox="0 0 24 24" fill="${i < t.stars ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`
+                ).join('');
+                
+                card.innerHTML = `
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">${t.avatar}</div>
+                        <div class="testimonial-info">
+                            <div class="testimonial-name">${t.name}</div>
+                            <div class="testimonial-handle">@${t.handle}</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-stars">${starsHtml}</div>
+                    <div class="testimonial-text">"${t.text}"</div>
+                    <div class="testimonial-gain">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                        ${t.gain} followers
+                    </div>
+                `;
+                
+                DOM.testimonialsScroll.appendChild(card);
+            });
+        }
+
+        // ============================================
+        // FAQ ACCORDION
+        // ============================================
+
+        /**
+         * Initialize FAQ accordion functionality
+         */
+        function initFAQ() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all
+                    faqItems.forEach(i => i.classList.remove('active'));
+                    
+                    // Open clicked if it was closed
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        // ============================================
+        // SHARE FUNCTIONALITY
+        // ============================================
+
+        /**
+         * Handle share button click
+         */
+        async function handleShare() {
+            const shareData = {
+                title: 'Instagram Follower Boost',
+                text: `I just got ${formatNumber(AppState.selectedPack?.count || 1000)} free Instagram followers! Try it yourself:`,
+                url: window.location.href
+            };
+            
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                    showToast('Thanks for sharing!', 'success');
+                } catch (err) {
+                    // User cancelled or share failed
+                    copyToClipboard(window.location.href);
+                }
+            } else {
+                copyToClipboard(window.location.href);
+            }
+        }
+
+        /**
+         * Copy text to clipboard
+         * @param {string} text - Text to copy
+         */
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('Link copied to clipboard!', 'success');
+                }).catch(() => {
+                    showToast('Failed to copy link', 'error');
+                });
+            } else {
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('Link copied to clipboard!', 'success');
+            }
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+
+        /**
+         * Initialize all event listeners
+         */
+        function initEventListeners() {
+            // Theme toggle
+            DOM.themeToggle.addEventListener('click', toggleTheme);
+            
+            // Username input
+            DOM.usernameInput.addEventListener('input', handleUsernameInput);
+            DOM.usernameInput.addEventListener('blur', handleUsernameInput);
+            
+            // Generate button
+            DOM.generateBtn.addEventListener('click', function(e) {
+                createRipple(e, this);
+                
+                if (!AppState.username) {
+                    showToast('Please enter a valid username', 'error');
+                    DOM.usernameInput.focus();
+                    return;
+                }
+                
+                if (!AppState.selectedPack) {
+                    showToast('Please select a follower pack', 'error');
+                    return;
+                }
+                
+                simulateGeneration();
+            });
+            
+            // Generate again button
+            DOM.generateAgainBtn.addEventListener('click', function(e) {
+                createRipple(e, this);
+                resetApplication();
+            });
+            
+            // Share button
+            DOM.shareBtn.addEventListener('click', function(e) {
+                createRipple(e, this);
+                handleShare();
+            });
+            
+            // Window resize for confetti canvas
+            window.addEventListener('resize', debounce(() => {
+                DOM.confettiCanvas.width = window.innerWidth;
+                DOM.confettiCanvas.height = window.innerHeight;
+            }, 100));
+            
+            // Prevent form submission on Enter
+            DOM.usernameInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (!AppState.isProcessing && AppState.username && AppState.selectedPack) {
+                        DOM.generateBtn.click();
+                    }
+                }
+            });
+        }
+
+        // ============================================
+        // ANIMATED BACKGROUND PARTICLES
+        // ============================================
+
+        /**
+         * Initialize subtle background particle effect
+         */
+        function initBackgroundParticles() {
+            // This creates a very subtle floating dot effect in the hero section
+            const hero = document.querySelector('.hero-section');
+            if (!hero) return;
+            
+            for (let i = 0; i < 15; i++) {
+                const dot = document.createElement('div');
+                dot.style.cssText = `
+                    position: absolute;
+                    width: ${randomInt(2, 6)}px;
+                    height: ${randomInt(2, 6)}px;
+                    background: rgba(0,149,246,${randomInt(5, 15) / 100});
+                    border-radius: 50%;
+                    left: ${randomInt(0, 100)}%;
+                    top: ${randomInt(0, 100)}%;
+                    animation: float ${randomInt(4, 8)}s ease-in-out infinite;
+                    animation-delay: ${randomInt(0, 5)}s;
+                    pointer-events: none;
+                `;
+                hero.appendChild(dot);
+            }
+        }
+
+        // ============================================
+        // VISIBILITY API - PAUSE ANIMATIONS WHEN HIDDEN
+        // ============================================
+
+        /**
+         * Handle page visibility changes to pause/resume animations
+         */
+        function initVisibilityHandler() {
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    // Page is hidden - could pause non-essential animations here
+                    if (AppState.liveFeedInterval) {
+                        clearInterval(AppState.liveFeedInterval);
+                    }
+                } else {
+                    // Page is visible again - resume animations
+                    if (!AppState.liveFeedInterval) {
+                        initLiveFeed();
+                    }
+                }
+            });
+        }
+
+        // ============================================
+        // SERVICE WORKER REGISTRATION (OPTIONAL PWA)
+        // ============================================
+
+        /**
+         * Register service worker for offline capability
+         */
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                const swCode = `
+                    self.addEventListener('install', e => {
+                        e.waitUntil(self.skipWaiting());
+                    });
+                    self.addEventListener('activate', e => {
+                        e.waitUntil(self.clients.claim());
+                    });
+                    self.addEventListener('fetch', e => {
+                        e.respondWith(fetch(e.request).catch(() => {
+                            return new Response('Offline - Please check your connection');
+                        }));
+                    });
+                `;
+                
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+                
+                navigator.serviceWorker.register(swUrl).catch(() => {
+                    // Silent fail - not critical
+                });
+            }
+        }
+
+        // ============================================
+        // KEYBOARD SHORTCUTS
+        // ============================================
+
+        /**
+         * Initialize keyboard shortcuts
+         */
+        function initKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                // Ctrl/Cmd + D for dark mode toggle
+                if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                    e.preventDefault();
+                    toggleTheme();
+                }
+                
+                // Escape to close modal
+                if (e.key === 'Escape') {
+                    DOM.modalOverlay.classList.remove('active');
+                }
+                
+                // Ctrl/Cmd + Enter to generate (when form is ready)
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    if (!AppState.isProcessing && AppState.username && AppState.selectedPack) {
+                        DOM.generateBtn.click();
+                    }
+                }
+            });
+        }
+
+        // ============================================
+        // ANALYTICS SIMULATION
+        // ============================================
+
+        /**
+         * Simulate analytics tracking (non-invasive)
+         */
+        function trackEvent(eventName, data = {}) {
+            // In a real application, this would send data to analytics
+            // For this demo, we just log to console in development
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                console.log(`[Analytics] ${eventName}:`, data);
+            }
+        }
+
+        // ============================================
+        // PERFORMANCE MONITORING
+        // ============================================
+
+        /**
+         * Monitor and log performance metrics
+         */
+        function initPerformanceMonitoring() {
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const perfData = window.performance.timing;
+                    const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+                    
+                    if (pageLoadTime > 3000) {
+                        console.warn(`[Performance] Page load slow: ${pageLoadTime}ms`);
+                    }
+                }, 0);
+            });
+        }
+
+        // ============================================
+        // ERROR HANDLING
+        // ============================================
+
+        /**
+         * Global error handler
+         */
+        window.addEventListener('error', (e) => {
+            console.error('[App Error]', e.error);
+            // In production, send to error tracking service
+        });
+
+        window.addEventListener('unhandledrejection', (e) => {
+            console.error('[Unhandled Promise]', e.reason);
+            // In production, send to error tracking service
+        });
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        /**
+         * Main application initialization
+         */
+        async function init() {
+            // Set initial theme
+            initTheme();
+            
+            // Show loading screen
+            await simulateLoading();
+            
+            // Initialize all components
+            initPackSelection();
+            initLiveFeed();
+            initTestimonials();
+            initFAQ();
+            initEventListeners();
+            initBackgroundParticles();
+            initVisibilityHandler();
+            initKeyboardShortcuts();
+            initPerformanceMonitoring();
+            
+            // Optional PWA support
+            registerServiceWorker();
+            
+            // Track app load
+            trackEvent('app_loaded', {
+                theme: AppState.theme,
+                userAgent: navigator.userAgent
+            });
+            
+            // Show welcome toast after a short delay
+            setTimeout(() => {
+                showToast('Welcome! Enter your username to get started.', 'info', 4000);
+            }, 1000);
+        }
+
+        // Start the application when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        // Expose minimal API for debugging (remove in production)
+        window.IGFollowerApp = {
+            state: AppState,
+            reset: resetApplication,
+            showToast: showToast,
+            showModal: showModal
+        };
+
+    </script>
+</body>
+</html>
