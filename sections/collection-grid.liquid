@@ -1,0 +1,393 @@
+{%- comment -%}
+  Collection Grid Section - Collection page with 3D thumbnails
+  Each card shows a mini Three.js scene with rotating sneaker
+{%- endcomment -%}
+
+<section class="collection-3d" id="collection-3d-section">
+  <div class="collection-3d__header">
+    <h1 class="collection-3d__title">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <div class="collection-3d__description">{{ collection.description }}</div>
+    {%- endif -%}
+  </div>
+  
+  <div class="collection-3d__grid" id="collection-grid">
+    {%- for product in collection.products -%}
+      <div class="collection-3d__card" data-product-id="{{ product.id }}" data-glb-url="{{ product.metafields.custom.glb_url }}">
+        <div class="collection-3d__canvas-container">
+          <canvas class="collection-3d__canvas" data-index="{{ forloop.index0 }}"></canvas>
+          <div class="collection-3d__fallback-image" style="background-image: url('{{ product.featured_image.src | image_url: width: 800 }}');"></div>
+        </div>
+        
+        <div class="collection-3d__info">
+          <h3 class="collection-3d__product-title">
+            <a href="{{ product.url }}">{{ product.title }}</a>
+          </h3>
+          <p class="collection-3d__product-vendor">{{ product.vendor }}</p>
+          <div class="collection-3d__product-price">
+            {%- if product.price_varies -%}
+              <span class="price-range">{{ product.price_min | money }} - {{ product.price_max | money }}</span>
+            {%- else -%}
+              <span>{{ product.price | money }}</span>
+            {%- endif -%}
+          </div>
+          
+          {%- unless product.available -%}
+            <span class="collection-3d__sold-out">Sold Out</span>
+          {%- endunless -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+  
+  {%- if paginate.pages > 1 -%}
+    {% render 'pagination', paginate: paginate %}
+  {%- endif -%}
+</section>
+
+<style>
+  .collection-3d {
+    padding: 3rem 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  
+  .collection-3d__header {
+    text-align: center;
+    margin: 0 0 3rem 0;
+  }
+  
+  .collection-3d__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 1rem 0;
+  }
+  
+  .collection-3d__description {
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  .collection-3d__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+  }
+  
+  .collection-3d__card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .collection-3d__card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+  
+  .collection-3d__canvas-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  }
+  
+  .collection-3d__canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .collection-3d__canvas.hidden {
+    opacity: 0;
+  }
+  
+  .collection-3d__fallback-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .collection-3d__fallback-image.visible {
+    opacity: 1;
+  }
+  
+  .collection-3d__info {
+    padding: 1.5rem;
+  }
+  
+  .collection-3d__product-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .collection-3d__product-title a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .collection-3d__product-title a:hover {
+    color: {{ section.settings.accent_color }};
+  }
+  
+  .collection-3d__product-vendor {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.75rem 0;
+  }
+  
+  .collection-3d__product-price {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: {{ section.settings.accent_color }};
+  }
+  
+  .collection-3d__sold-out {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 4px;
+  }
+  
+  @media (max-width: 1024px) {
+    .collection-3d__grid {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    
+    .collection-3d__canvas-container {
+      height: 300px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .collection-3d {
+      padding: 1.5rem 1rem;
+    }
+    
+    .collection-3d__grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .collection-3d__canvas-container {
+      height: 250px;
+    }
+    
+    .collection-3d__title {
+      font-size: 1.75rem;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  const section = document.getElementById('collection-3d-section');
+  if (!section) return;
+  
+  // Check if mobile - use fallback images
+  const isMobile = window.innerWidth < 768;
+  
+  const cards = section.querySelectorAll('.collection-3d__card');
+  const canvasContainers = section.querySelectorAll('.collection-3d__canvas-container');
+  
+  // Intersection Observer for lazy loading
+  const observerOptions = {
+    root: null,
+    rootMargin: '50px',
+    threshold: 0.1
+  };
+  
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        const container = entry.target;
+        const canvas = container.querySelector('.collection-3d__canvas');
+        const fallback = container.querySelector('.collection-3d__fallback-image');
+        const glbUrl = container.closest('.collection-3d__card').dataset.glbUrl || '';
+        
+        if (isMobile || !window.THREE) {
+          // Show fallback image
+          if (fallback) fallback.classList.add('visible');
+          if (canvas) canvas.classList.add('hidden');
+        } else {
+          initMiniScene(canvas, glbUrl);
+        }
+        
+        observer.unobserve(container);
+      }
+    });
+  }, observerOptions);
+  
+  canvasContainers.forEach(function(container) {
+    observer.observe(container);
+  });
+  
+  // Mini scene initialization
+  function initMiniScene(canvas, glbUrl) {
+    if (!canvas || canvas.dataset.initialized === 'true') return;
+    canvas.dataset.initialized = 'true';
+    
+    const width = canvas.offsetWidth;
+    const height = canvas.offsetHeight;
+    
+    // Scene setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+    camera.position.set(0, 0, 4);
+    
+    const renderer = new THREE.WebGLRenderer({ 
+      canvas: canvas, 
+      antialias: true, 
+      alpha: true 
+    });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.0;
+    
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
+    
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+    directionalLight.position.set(3, 5, 5);
+    scene.add(directionalLight);
+    
+    // Controls
+    const controls = new THREE.OrbitControls(camera, canvas);
+    controls.enableDamping = false;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 2.0;
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    
+    // Model loading
+    let sneakerModel = null;
+    const loader = new THREE.GLTFLoader();
+    
+    function createProceduralSneaker() {
+      const group = new THREE.Group();
+      
+      const bodyGeo = new THREE.BoxGeometry(1.5, 0.5, 3);
+      const bodyMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.3 });
+      const body = new THREE.Mesh(bodyGeo, bodyMat);
+      group.add(body);
+      
+      const soleGeo = new THREE.BoxGeometry(1.6, 0.2, 3.2);
+      const soleMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.8 });
+      const sole = new THREE.Mesh(soleGeo, soleMat);
+      sole.position.y = -0.35;
+      group.add(sole);
+      
+      return group;
+    }
+    
+    if (glbUrl) {
+      loader.load(glbUrl, function(gltf) {
+        sneakerModel = gltf.scene;
+        
+        const box = new THREE.Box3().setFromObject(sneakerModel);
+        const center = box.getCenter(new THREE.Vector3());
+        sneakerModel.position.sub(center);
+        sneakerModel.position.y = box.min.y * -1;
+        
+        sneakerModel.scale.set(0.5, 0.5, 0.5);
+        scene.add(sneakerModel);
+      }, undefined, function() {
+        sneakerModel = createProceduralSneaker();
+        sneakerModel.scale.set(0.5, 0.5, 0.5);
+        scene.add(sneakerModel);
+      });
+    } else {
+      sneakerModel = createProceduralSneaker();
+      sneakerModel.scale.set(0.5, 0.5, 0.5);
+      scene.add(sneakerModel);
+    }
+    
+    // Hover effect - pause rotation and intensify lighting
+    const card = canvas.closest('.collection-3d__card');
+    card.addEventListener('mouseenter', function() {
+      controls.autoRotate = false;
+      directionalLight.intensity = 1.5;
+    });
+    
+    card.addEventListener('mouseleave', function() {
+      controls.autoRotate = true;
+      directionalLight.intensity = 1.0;
+    });
+    
+    // Animation loop
+    let animationId;
+    function animate() {
+      animationId = requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+    
+    // Store cleanup function
+    canvas.cleanup = function() {
+      cancelAnimationFrame(animationId);
+      renderer.dispose();
+      if (sneakerModel) {
+        sneakerModel.traverse(function(child) {
+          if (child.geometry) child.geometry.dispose();
+          if (child.material) child.material.dispose();
+        });
+      }
+    };
+  }
+  
+  // Cleanup on section unload
+  window.addEventListener('shopify:section:unload', function(e) {
+    if (e.detail.sectionId === '{{ section.id }}') {
+      const canvases = section.querySelectorAll('.collection-3d__canvas');
+      canvases.forEach(function(canvas) {
+        if (canvas.cleanup) canvas.cleanup();
+      });
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Collection 3D Grid",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#ff3366"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection 3D Grid"
+    }
+  ]
+}
+{% endschema %}

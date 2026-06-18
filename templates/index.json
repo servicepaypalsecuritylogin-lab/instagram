@@ -1,0 +1,26 @@
+{
+  "sections": [
+    {
+      "type": "hero-3d",
+      "settings": {
+        "heading": "LIMITED DROPS",
+        "subheading": "Exclusive sneakers. Limited quantities.",
+        "cta_text": "EXPLORE COLLECTION",
+        "collection_url": "/collections/all"
+      }
+    },
+    {
+      "type": "featured-collection",
+      "settings": {
+        "title": "New Arrivals",
+        "collection": "all",
+        "products_to_show": 4,
+        "columns_desktop": 4
+      }
+    }
+  ],
+  "content_for_index": [
+    "hero-3d",
+    "featured-collection"
+  ]
+}

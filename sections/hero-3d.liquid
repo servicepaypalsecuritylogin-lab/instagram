@@ -1,0 +1,476 @@
+{%- comment -%}
+  Hero 3D Section - Full-screen 3D sneaker viewer
+  Displays a central 3D model with particle effects and overlay text
+{%- endcomment -%}
+
+<section class="hero-3d" id="hero-3d-section" data-glb-url="{{ section.settings.glb_model_url }}" data-env-url="{{ section.settings.environment_map }}">
+  <div class="hero-3d__canvas-container">
+    <canvas id="hero-canvas" class="hero-3d__canvas"></canvas>
+  </div>
+  
+  <div class="hero-3d__overlay">
+    <div class="hero-3d__content">
+      <h1 class="hero-3d__title">{{ section.settings.heading }}</h1>
+      <p class="hero-3d__subtitle">{{ section.settings.subheading }}</p>
+      <a href="{{ section.settings.collection_url }}" class="hero-3d__cta button">
+        {{ section.settings.cta_text }}
+      </a>
+    </div>
+    
+    <div class="hero-3d__scroll-indicator">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 5V19M12 19L5 12M12 19L19 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+  
+  <div class="hero-3d__hotspots" id="hero-hotspots"></div>
+</section>
+
+<style>
+  .hero-3d {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+  }
+  
+  .hero-3d__canvas-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  
+  .hero-3d__canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  
+  .hero-3d__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .hero-3d__content {
+    text-align: center;
+    pointer-events: auto;
+  }
+  
+  .hero-3d__title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+    mix-blend-mode: difference;
+    margin: 0 0 1rem 0;
+    line-height: 1;
+  }
+  
+  .hero-3d__subtitle {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 2rem 0;
+    max-width: 600px;
+  }
+  
+  .hero-3d__cta {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: {{ section.settings.accent_color }};
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    border-radius: 4px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .hero-3d__cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .hero-3d__scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.6);
+    animation: bounce 2s infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+    40% { transform: translateX(-50%) translateY(-10px); }
+    60% { transform: translateX(-50%) translateY(-5px); }
+  }
+  
+  .hero-3d__hotspots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+  }
+  
+  .hotspot {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: {{ section.settings.accent_color }};
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+    animation: pulse 1.5s infinite;
+    transform: translate(-50%, -50%);
+  }
+  
+  .hotspot::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border-radius: inherit;
+    transform: translate(-50%, -50%);
+    animation: ripple 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
+  }
+  
+  @keyframes ripple {
+    0% { width: 100%; height: 100%; opacity: 1; }
+    100% { width: 300%; height: 300%; opacity: 0; }
+  }
+  
+  @media (max-width: 768px) {
+    .hero-3d__title {
+      font-size: 2.5rem;
+    }
+    
+    .hero-3d__subtitle {
+      font-size: 1rem;
+      padding: 0 1rem;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  const section = document.getElementById('hero-3d-section');
+  if (!section) return;
+  
+  const canvas = document.getElementById('hero-canvas');
+  const glbUrl = section.dataset.glbUrl || '';
+  const envUrl = section.dataset.envUrl || '';
+  
+  // Scene setup
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.set(0, 0, 5);
+  
+  const renderer = new THREE.WebGLRenderer({ 
+    canvas: canvas, 
+    antialias: true, 
+    alpha: true 
+  });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.2;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  
+  // Lighting
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+  scene.add(ambientLight);
+  
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+  directionalLight.position.set(5, 10, 7);
+  directionalLight.castShadow = true;
+  directionalLight.shadow.mapSize.width = 2048;
+  directionalLight.shadow.mapSize.height = 2048;
+  scene.add(directionalLight);
+  
+  // Environment map
+  let pmremGenerator;
+  if (envUrl) {
+    pmremGenerator = new THREE.PMREMGenerator(renderer);
+    pmremGenerator.compileEquirectangularShader();
+    new THREE.TextureLoader().load(envUrl, function(texture) {
+      const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+      scene.environment = envMap;
+    });
+  }
+  
+  // Controls
+  const controls = new THREE.OrbitControls(camera, canvas);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+  controls.minDistance = 2;
+  controls.maxDistance = 8;
+  controls.maxPolarAngle = Math.PI / 2;
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 0.5;
+  
+  // Model loading
+  let sneakerModel = null;
+  const loader = new THREE.GLTFLoader();
+  const dracoLoader = new THREE.DRACOLoader();
+  dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/draco/');
+  loader.setDRACOLoader(dracoLoader);
+  
+  function createProceduralSneaker() {
+    const group = new THREE.Group();
+    
+    // Main body
+    const bodyGeo = new THREE.BoxGeometry(1.5, 0.5, 3);
+    const bodyMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.3, metalness: 0.1 });
+    const body = new THREE.Mesh(bodyGeo, bodyMat);
+    body.castShadow = true;
+    body.receiveShadow = true;
+    group.add(body);
+    
+    // Sole
+    const soleGeo = new THREE.BoxGeometry(1.6, 0.2, 3.2);
+    const soleMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.8 });
+    const sole = new THREE.Mesh(soleGeo, soleMat);
+    sole.position.y = -0.35;
+    sole.castShadow = true;
+    group.add(sole);
+    
+    // Toe cap
+    const toeGeo = new THREE.SphereGeometry(0.8, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+    const toeMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.2 });
+    const toe = new THREE.Mesh(toeGeo, toeMat);
+    toe.position.set(0, 0, 1.5);
+    toe.rotation.x = Math.PI;
+    toe.scale.z = 0.5;
+    toe.castShadow = true;
+    group.add(toe);
+    
+    // Heel
+    const heelGeo = new THREE.CylinderGeometry(0.6, 0.8, 0.5, 32);
+    const heelMat = new THREE.MeshStandardMaterial({ color: 0x444444, roughness: 0.3 });
+    const heel = new THREE.Mesh(heelGeo, heelMat);
+    heel.position.set(0, 0, -1.5);
+    heel.castShadow = true;
+    group.add(heel);
+    
+    return group;
+  }
+  
+  function loadModel() {
+    if (glbUrl) {
+      loader.load(glbUrl, function(gltf) {
+        sneakerModel = gltf.scene;
+        
+        // Auto-center
+        const box = new THREE.Box3().setFromObject(sneakerModel);
+        const center = box.getCenter(new THREE.Vector3());
+        sneakerModel.position.sub(center);
+        sneakerModel.position.y = box.min.y * -1;
+        
+        // Enable shadows
+        sneakerModel.traverse(function(child) {
+          if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+          }
+        });
+        
+        sneakerModel.scale.set(0.6, 0.6, 0.6);
+        scene.add(sneakerModel);
+      }, undefined, function(error) {
+        console.warn('GLB load failed, using procedural fallback:', error);
+        sneakerModel = createProceduralSneaker();
+        sneakerModel.scale.set(0.6, 0.6, 0.6);
+        scene.add(sneakerModel);
+      });
+    } else {
+      sneakerModel = createProceduralSneaker();
+      sneakerModel.scale.set(0.6, 0.6, 0.6);
+      scene.add(sneakerModel);
+    }
+  }
+  
+  loadModel();
+  
+  // Particle system
+  const particleCount = 200;
+  const particleGeo = new THREE.BufferGeometry();
+  const positions = new Float32Array(particleCount * 3);
+  const velocities = [];
+  
+  for (let i = 0; i < particleCount * 3; i += 3) {
+    positions[i] = (Math.random() - 0.5) * 10;
+    positions[i + 1] = (Math.random() - 0.5) * 10;
+    positions[i + 2] = (Math.random() - 0.5) * 10;
+    velocities.push({
+      x: (Math.random() - 0.5) * 0.01,
+      y: (Math.random() - 0.5) * 0.01,
+      z: (Math.random() - 0.5) * 0.01
+    });
+  }
+  
+  particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particleMat = new THREE.PointsMaterial({
+    color: 0xffffff,
+    size: 0.02,
+    transparent: true,
+    opacity: 0.6
+  });
+  const particles = new THREE.Points(particleGeo, particleMat);
+  scene.add(particles);
+  
+  // Animation loop
+  let animationId;
+  let lastTime = 0;
+  const clock = new THREE.Clock();
+  
+  function animate(currentTime) {
+    animationId = requestAnimationFrame(animate);
+    
+    const delta = clock.getDelta();
+    const elapsed = clock.getElapsedTime();
+    
+    // Cap at 60fps
+    if (delta > 1/60) return;
+    
+    // Idle float animation
+    if (sneakerModel) {
+      sneakerModel.position.y = Math.sin(elapsed * 1.5) * 0.05;
+    }
+    
+    // Particle drift
+    const posAttr = particleGeo.attributes.position;
+    for (let i = 0; i < particleCount; i++) {
+      posAttr.array[i * 3] += velocities[i].x;
+      posAttr.array[i * 3 + 1] += velocities[i].y;
+      posAttr.array[i * 3 + 2] += velocities[i].z;
+      
+      // Wrap around
+      if (Math.abs(posAttr.array[i * 3]) > 5) posAttr.array[i * 3] *= -1;
+      if (Math.abs(posAttr.array[i * 3 + 1]) > 5) posAttr.array[i * 3 + 1] *= -1;
+      if (Math.abs(posAttr.array[i * 3 + 2]) > 5) posAttr.array[i * 3 + 2] *= -1;
+    }
+    posAttr.needsUpdate = true;
+    
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  
+  animate(0);
+  
+  // Handle visibility change
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      cancelAnimationFrame(animationId);
+    } else {
+      animate(0);
+    }
+  });
+  
+  // Resize handler
+  window.addEventListener('resize', function() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+  
+  // Cleanup on section unload
+  window.addEventListener('shopify:section:unload', function(e) {
+    if (e.detail.sectionId === '{{ section.id }}') {
+      cancelAnimationFrame(animationId);
+      renderer.dispose();
+      particleGeo.dispose();
+      particleMat.dispose();
+      if (sneakerModel) {
+        sneakerModel.traverse(function(child) {
+          if (child.geometry) child.geometry.dispose();
+          if (child.material) child.material.dispose();
+        });
+      }
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Hero 3D",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "LIMITED DROPS"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Exclusive sneakers. Limited quantities."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Text",
+      "default": "EXPLORE COLLECTION"
+    },
+    {
+      "type": "url",
+      "id": "collection_url",
+      "label": "Collection URL",
+      "default": "/collections/all"
+    },
+    {
+      "type": "text",
+      "id": "glb_model_url",
+      "label": "3D Model URL (GLB)",
+      "info": "URL to your GLB file"
+    },
+    {
+      "type": "image_picker",
+      "id": "environment_map",
+      "label": "Environment Map (HDR)"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#ff3366"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero 3D"
+    }
+  ]
+}
+{% endschema %}
