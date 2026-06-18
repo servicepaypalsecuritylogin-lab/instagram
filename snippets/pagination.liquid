@@ -1,0 +1,143 @@
+{%- comment -%}
+  Pagination Snippet
+  Renders pagination controls for collection pages
+{%- endcomment -%}
+
+{%- if paginate.pages > 1 -%}
+<nav class="pagination" role="navigation" aria-label="Pagination">
+  <ul class="pagination__list">
+    {%- if paginate.previous -%}
+      <li class="pagination__item">
+        <a href="{{ paginate.previous.url }}" class="pagination__link pagination__link--prev" aria-label="Previous page">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Previous</span>
+        </a>
+      </li>
+    {%- else -%}
+      <li class="pagination__item pagination__item--disabled">
+        <span class="pagination__link pagination__link--prev" aria-disabled="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Previous</span>
+        </span>
+      </li>
+    {%- endif -%}
+
+    {%- for part in paginate.parts -%}
+      <li class="pagination__item{% if part.is_link %}{% else %} pagination__item--active{% endif %}">
+        {%- if part.is_link -%}
+          <a href="{{ part.url }}" class="pagination__link">{{ part.title }}</a>
+        {%- else -%}
+          {%- if part.title == paginate.current_page -%}
+            <span class="pagination__link pagination__link--current">{{ part.title }}</span>
+          {%- else -%}
+            <span class="pagination__link">...</span>
+          {%- endif -%}
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+
+    {%- if paginate.next -%}
+      <li class="pagination__item">
+        <a href="{{ paginate.next.url }}" class="pagination__link pagination__link--next" aria-label="Next page">
+          <span>Next</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </li>
+    {%- else -%}
+      <li class="pagination__item pagination__item--disabled">
+        <span class="pagination__link pagination__link--next" aria-disabled="true">
+          <span>Next</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </li>
+    {%- endif -%}
+  </ul>
+  
+  <p class="pagination__info">
+    Page {{ paginate.current_page }} of {{ paginate.pages }}
+  </p>
+</nav>
+
+<style>
+  .pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-2xl) 0;
+  }
+  
+  .pagination__list {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+  
+  .pagination__item {
+    list-style: none;
+  }
+  
+  .pagination__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 var(--spacing-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-fast);
+  }
+  
+  .pagination__link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-primary);
+  }
+  
+  .pagination__link--current {
+    background: var(--color-accent);
+    color: #ffffff;
+  }
+  
+  .pagination__link--prev,
+  .pagination__link--next {
+    gap: var(--spacing-xs);
+  }
+  
+  .pagination__item--disabled .pagination__link {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  .pagination__info {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+  
+  @media (max-width: 768px) {
+    .pagination__link {
+      min-width: 36px;
+      height: 36px;
+      padding: 0 var(--spacing-sm);
+      font-size: 0.8125rem;
+    }
+    
+    .pagination__link--prev span,
+    .pagination__link--next span {
+      display: none;
+    }
+  }
+</style>
+{%- endif -%}

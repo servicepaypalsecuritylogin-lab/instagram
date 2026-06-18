@@ -1,0 +1,741 @@
+{%- comment -%}
+  Product 3D Section - Product page with 3D model viewer
+  70% viewport for 3D canvas, 30% for product info panel
+{%- endcomment -%}
+
+<section class="product-3d" id="product-3d-section" data-product="{{ product | json }}" data-glb-url="{{ section.settings.glb_model_url | default: product.metafields.custom.glb_url }}">
+  <div class="product-3d__container">
+    <!-- 3D Canvas Area (70%) -->
+    <div class="product-3d__viewer">
+      <div class="product-3d__canvas-wrapper">
+        <canvas id="product-canvas" class="product-3d__canvas"></canvas>
+        
+        <!-- Hotspots overlay -->
+        <div class="product-3d__hotspots" id="product-hotspots"></div>
+        
+        <!-- Loading indicator -->
+        <div class="product-3d__loader" id="product-loader">
+          <div class="spinner"></div>
+          <p>Loading 3D Model...</p>
+        </div>
+      </div>
+      
+      <!-- AR Button -->
+      {%- if section.settings.enable_ar -%}
+      <model-viewer 
+        id="ar-model-viewer"
+        src="{{ section.settings.glb_model_url | default: product.metafields.custom.glb_url }}"
+        alt="{{ product.title }}"
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        camera-controls
+        auto-rotate
+        shadow-intensity="1"
+        class="product-3d__ar-fallback"
+      >
+        <button slot="ar-button" class="product-3d__ar-button">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          View in your space
+        </button>
+      </model-viewer>
+      {%- endif -%}
+    </div>
+    
+    <!-- Product Info Panel (30%) -->
+    <div class="product-3d__info">
+      <div class="product-3d__info-inner">
+        <h1 class="product-3d__title">{{ product.title }}</h1>
+        <p class="product-3d__vendor">{{ product.vendor }}</p>
+        
+        <!-- Price -->
+        <div class="product-3d__price" id="product-price">
+          {%- if product.price_varies -%}
+            <span class="price-range">{{ product.price_min | money }} - {{ product.price_max | money }}</span>
+          {%- else -%}
+            <span>{{ product.price | money }}</span>
+          {%- endif -%}
+        </div>
+        
+        <!-- Colorway Switcher -->
+        {%- if product.options_with_values.size > 0 -%}
+        <div class="product-3d__options">
+          {%- for option in product.options_with_values -%}
+            <div class="product-3d__option">
+              <label class="product-3d__option-label">{{ option.name }}</label>
+              
+              {%- if option.name contains 'Color' or option.name contains 'Colour' -%}
+                <div class="product-3d__color-swatch">
+                  {%- for value in option.values -%}
+                    {%- assign color_hex = product.metafields.custom.color_hexes[value] | default: '#333333' -%}
+                    <button 
+                      class="product-3d__swatch{% if option.selected_value == value %} active{% endif %}"
+                      data-color="{{ color_hex }}"
+                      data-value="{{ value }}"
+                      style="background-color: {{ color_hex }};"
+                      aria-label="{{ value }}"
+                    >
+                    </button>
+                  {%- endfor -%}
+                </div>
+              {%- else -%}
+                <div class="product-3d__size-selector">
+                  {%- for value in option.values -%}
+                    <button 
+                      class="product-3d__size-btn{% if option.selected_value == value %} active{% endif %}"
+                      data-value="{{ value }}"
+                    >
+                      {{ value }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+        {%- endif -%}
+        
+        <!-- Description -->
+        {%- if product.description != blank -%}
+        <div class="product-3d__description">
+          {{ product.description }}
+        </div>
+        {%- endif -%}
+        
+        <!-- Add to Cart Form -->
+        {%- form 'product', product, id: 'product-form-' | append: section.id -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          
+          <div class="product-3d__actions">
+            <button 
+              type="submit" 
+              class="product-3d__add-to-cart button"
+              {% unless product.available %}disabled{% endunless %}
+            >
+              {%- if product.available -%}
+                Add to Cart
+              {%- else -%}
+                Sold Out
+              {%- endif -%}
+            </button>
+          </div>
+          
+          <div class="product-3d__guarantees">
+            <div class="guarantee-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/></svg>
+              <span>Lifetime Warranty</span>
+            </div>
+            <div class="guarantee-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2"/></svg>
+              <span>Free Returns</span>
+            </div>
+          </div>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-3d {
+    padding: 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  
+  .product-3d__container {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    gap: 2rem;
+    min-height: 80vh;
+  }
+  
+  .product-3d__viewer {
+    position: relative;
+  }
+  
+  .product-3d__canvas-wrapper {
+    position: relative;
+    height: 80vh;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .product-3d__canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  
+  .product-3d__loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    z-index: 10;
+  }
+  
+  .product-3d__loader.hidden {
+    display: none;
+  }
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: {{ section.settings.accent_color }};
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .product-3d__hotspots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+  }
+  
+  .product-3d__hotspot {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: {{ section.settings.accent_color }};
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+    transform: translate(-50%, -50%);
+    transition: transform 0.2s ease;
+  }
+  
+  .product-3d__hotspot:hover {
+    transform: translate(-50%, -50%) scale(1.3);
+  }
+  
+  .product-3d__hotspot-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  
+  .product-3d__hotspot:hover .product-3d__hotspot-tooltip {
+    opacity: 1;
+  }
+  
+  .product-3d__ar-fallback {
+    display: none;
+    width: 100%;
+    height: 80vh;
+    border-radius: 12px;
+  }
+  
+  .product-3d__ar-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: {{ section.settings.accent_color }};
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  
+  .product-3d__info {
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+  }
+  
+  .product-3d__info-inner {
+    padding: 2rem;
+    background: #1a1a1a;
+    border-radius: 12px;
+  }
+  
+  .product-3d__title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: #ffffff;
+  }
+  
+  .product-3d__vendor {
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 1rem 0;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  
+  .product-3d__price {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: {{ section.settings.accent_color }};
+    margin: 0 0 2rem 0;
+  }
+  
+  .product-3d__options {
+    margin: 0 0 2rem 0;
+  }
+  
+  .product-3d__option {
+    margin: 0 0 1.5rem 0;
+  }
+  
+  .product-3d__option-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 0.75rem 0;
+    text-transform: uppercase;
+  }
+  
+  .product-3d__color-swatch {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  
+  .product-3d__swatch {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  
+  .product-3d__swatch:hover {
+    transform: scale(1.1);
+  }
+  
+  .product-3d__swatch.active {
+    border-color: #ffffff;
+  }
+  
+  .product-3d__size-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  .product-3d__size-btn {
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .product-3d__size-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .product-3d__size-btn.active {
+    background: {{ section.settings.accent_color }};
+    border-color: {{ section.settings.accent_color }};
+  }
+  
+  .product-3d__description {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin: 0 0 2rem 0;
+    font-size: 0.9375rem;
+  }
+  
+  .product-3d__add-to-cart {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: {{ section.settings.accent_color }};
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .product-3d__add-to-cart:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  .product-3d__add-to-cart:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .product-3d__guarantees {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .guarantee-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8125rem;
+  }
+  
+  @media (max-width: 1024px) {
+    .product-3d__container {
+      grid-template-columns: 1fr;
+    }
+    
+    .product-3d__canvas-wrapper {
+      height: 60vh;
+    }
+    
+    .product-3d__info {
+      position: static;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .product-3d {
+      padding: 1rem;
+    }
+    
+    .product-3d__canvas-wrapper {
+      display: none;
+    }
+    
+    .product-3d__ar-fallback {
+      display: block;
+    }
+    
+    .product-3d__desktop-badge {
+      display: block;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.875rem;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  const section = document.getElementById('product-3d-section');
+  if (!section) return;
+  
+  // Check if mobile - disable 3D
+  const isMobile = window.innerWidth < 768;
+  if (isMobile) {
+    const badge = document.createElement('div');
+    badge.className = 'product-3d__desktop-badge';
+    badge.textContent = 'View in 3D on Desktop';
+    section.querySelector('.product-3d__canvas-wrapper').parentNode.insertBefore(badge, section.querySelector('.product-3d__canvas-wrapper'));
+    return;
+  }
+  
+  const canvas = document.getElementById('product-canvas');
+  const loader = document.getElementById('product-loader');
+  const productData = JSON.parse(section.dataset.product || '{}');
+  const glbUrl = section.dataset.glbUrl || '';
+  
+  // Scene setup
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, canvas.offsetWidth / canvas.offsetHeight, 0.1, 100);
+  camera.position.set(0, 0, 4);
+  
+  const renderer = new THREE.WebGLRenderer({ 
+    canvas: canvas, 
+    antialias: true, 
+    alpha: true 
+  });
+  renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.2;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  
+  // Lighting
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambientLight);
+  
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+  directionalLight.position.set(5, 10, 7);
+  directionalLight.castShadow = true;
+  directionalLight.shadow.mapSize.width = 2048;
+  directionalLight.shadow.mapSize.height = 2048;
+  scene.add(directionalLight);
+  
+  // Controls
+  const controls = new THREE.OrbitControls(camera, canvas);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+  controls.minDistance = 2;
+  controls.maxDistance = 8;
+  controls.maxPolarAngle = Math.PI / 2;
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 0.5;
+  
+  // Zoom on scroll
+  canvas.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    const delta = e.deltaY * 0.01;
+    camera.position.z += delta;
+    camera.position.z = Math.max(controls.minDistance, Math.min(controls.maxDistance, camera.position.z));
+  }, { passive: false });
+  
+  // Model loading
+  let sneakerModel = null;
+  const loader3D = new THREE.GLTFLoader();
+  const dracoLoader = new THREE.DRACOLoader();
+  dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/draco/');
+  loader3D.setDRACOLoader(dracoLoader);
+  
+  function createProceduralSneaker() {
+    const group = new THREE.Group();
+    
+    const bodyGeo = new THREE.BoxGeometry(1.5, 0.5, 3);
+    const bodyMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.3, metalness: 0.1 });
+    const body = new THREE.Mesh(bodyGeo, bodyMat);
+    body.castShadow = true;
+    body.receiveShadow = true;
+    group.add(body);
+    
+    const soleGeo = new THREE.BoxGeometry(1.6, 0.2, 3.2);
+    const soleMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.8 });
+    const sole = new THREE.Mesh(soleGeo, soleMat);
+    sole.position.y = -0.35;
+    sole.castShadow = true;
+    group.add(sole);
+    
+    const toeGeo = new THREE.SphereGeometry(0.8, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+    const toeMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.2 });
+    const toe = new THREE.Mesh(toeGeo, toeMat);
+    toe.position.set(0, 0, 1.5);
+    toe.rotation.x = Math.PI;
+    toe.scale.z = 0.5;
+    toe.castShadow = true;
+    group.add(toe);
+    
+    const heelGeo = new THREE.CylinderGeometry(0.6, 0.8, 0.5, 32);
+    const heelMat = new THREE.MeshStandardMaterial({ color: 0x444444, roughness: 0.3 });
+    const heel = new THREE.Mesh(heelGeo, heelMat);
+    heel.position.set(0, 0, -1.5);
+    heel.castShadow = true;
+    group.add(heel);
+    
+    return group;
+  }
+  
+  function loadModel() {
+    if (glbUrl) {
+      loader3D.load(glbUrl, function(gltf) {
+        sneakerModel = gltf.scene;
+        
+        const box = new THREE.Box3().setFromObject(sneakerModel);
+        const center = box.getCenter(new THREE.Vector3());
+        sneakerModel.position.sub(center);
+        sneakerModel.position.y = box.min.y * -1;
+        
+        sneakerModel.traverse(function(child) {
+          if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+          }
+        });
+        
+        sneakerModel.scale.set(0.5, 0.5, 0.5);
+        scene.add(sneakerModel);
+        loader.classList.add('hidden');
+      }, undefined, function(error) {
+        console.warn('GLB load failed, using procedural fallback:', error);
+        sneakerModel = createProceduralSneaker();
+        sneakerModel.scale.set(0.5, 0.5, 0.5);
+        scene.add(sneakerModel);
+        loader.classList.add('hidden');
+      });
+    } else {
+      sneakerModel = createProceduralSneaker();
+      sneakerModel.scale.set(0.5, 0.5, 0.5);
+      scene.add(sneakerModel);
+      loader.classList.add('hidden');
+    }
+  }
+  
+  loadModel();
+  
+  // Animation loop
+  let animationId;
+  const clock = new THREE.Clock();
+  let isInteracting = false;
+  
+  function animate() {
+    animationId = requestAnimationFrame(animate);
+    
+    const delta = clock.getDelta();
+    const elapsed = clock.getElapsedTime();
+    
+    if (delta > 1/60) return;
+    
+    // Idle float
+    if (sneakerModel && !isInteracting) {
+      sneakerModel.position.y = Math.sin(elapsed * 1.5) * 0.02;
+    }
+    
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  
+  animate();
+  
+  // Pause rotation on interaction
+  controls.addEventListener('start', function() {
+    isInteracting = true;
+    controls.autoRotate = false;
+  });
+  
+  controls.addEventListener('end', function() {
+    setTimeout(function() {
+      isInteracting = false;
+      controls.autoRotate = true;
+    }, 2000);
+  });
+  
+  // Color swatch handling
+  const swatches = section.querySelectorAll('.product-3d__swatch');
+  swatches.forEach(function(swatch) {
+    swatch.addEventListener('click', function() {
+      const color = this.dataset.color;
+      
+      // Update active state
+      swatches.forEach(function(s) { s.classList.remove('active'); });
+      this.classList.add('active');
+      
+      // Update 3D model color
+      if (sneakerModel) {
+        sneakerModel.traverse(function(child) {
+          if (child.isMesh && child.material) {
+            if (Array.isArray(child.material)) {
+              child.material.forEach(function(mat) {
+                mat.color.set(color);
+              });
+            } else {
+              child.material.color.set(color);
+            }
+          }
+        });
+      }
+    });
+  });
+  
+  // Size selector handling
+  const sizeBtns = section.querySelectorAll('.product-3d__size-btn');
+  sizeBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      sizeBtns.forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      
+      // Update hidden input
+      const variantId = productData.variants.find(function(v) {
+        return v.option1 === this.dataset.value || v.option2 === this.dataset.value || v.option3 === this.dataset.value;
+      }.bind(this));
+      
+      if (variantId) {
+        const input = section.querySelector('input[name="id"]');
+        if (input) input.value = variantId.id;
+      }
+    });
+  });
+  
+  // Resize handler
+  window.addEventListener('resize', function() {
+    if (canvas.offsetWidth > 0 && canvas.offsetHeight > 0) {
+      camera.aspect = canvas.offsetWidth / canvas.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+    }
+  });
+  
+  // Cleanup
+  window.addEventListener('shopify:section:unload', function(e) {
+    if (e.detail.sectionId === '{{ section.id }}') {
+      cancelAnimationFrame(animationId);
+      renderer.dispose();
+      if (sneakerModel) {
+        sneakerModel.traverse(function(child) {
+          if (child.geometry) child.geometry.dispose();
+          if (child.material) child.material.dispose();
+        });
+      }
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Product 3D",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "glb_model_url",
+      "label": "3D Model URL (GLB)",
+      "info": "Overrides product metafield if set"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_ar",
+      "label": "Enable AR Quick Look",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#ff3366"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product 3D"
+    }
+  ]
+}
+{% endschema %}
