@@ -1,0 +1,117 @@
+{%- comment -%}
+  NOVA3D Theme - Default English Translations
+{%- endcomment -%}
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Skip to content",
+      "close": "Close"
+    },
+    "meta": {
+      "tags": "Tags",
+      "page": "Page"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "shop": "Shop",
+    "lookbook": "Lookbook",
+    "about": "About",
+    "contact": "Contact",
+    "menu": "Menu"
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "taxes_included": "Taxes included",
+    "shipping_calculated": "Shipping calculated at checkout",
+    "checkout": "Checkout",
+    "continue_shopping": "Continue Shopping",
+    "update": "Update Cart",
+    "remove": "Remove",
+    "quantity": "Quantity",
+    "discount_code": "Discount code",
+    "apply": "Apply"
+  },
+  "products": {
+    "product": "Product",
+    "add_to_cart": "Add to Cart",
+    "sold_out": "Sold Out",
+    "unavailable": "Unavailable",
+    "on_sale": "Sale",
+    "quick_add": "Quick Add",
+    "wishlist": "Wishlist",
+    "share": "Share",
+    "description": "Description",
+    "shipping_returns": "Shipping & Returns",
+    "size_guide": "Size Guide",
+    "quantity": "Quantity",
+    "buy_now": "Buy It Now"
+  },
+  "collections": {
+    "all": "All Products",
+    "new": "New Arrivals",
+    "bestsellers": "Bestsellers",
+    "sale": "Sale",
+    "filter": "Filter",
+    "sort": "Sort by",
+    "products_count": "{{ count }} products",
+    "no_products": "No products found",
+    "load_more": "Load More"
+  },
+  "customer": {
+    "account": "Account",
+    "login": "Log in",
+    "logout": "Log out",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "forgot_password": "Forgot password?",
+    "submit": "Submit"
+  },
+  "newsletter": {
+    "heading": "Join the Revolution",
+    "subtext": "Subscribe for exclusive drops, early access, and special offers.",
+    "button": "Subscribe",
+    "privacy": "We respect your privacy. Unsubscribe at any time.",
+    "success": "Thank you for subscribing!",
+    "error": "Please enter a valid email address."
+  },
+  "homepage": {
+    "hero_heading": "FUTURE OF FASHION",
+    "hero_subheading": "Experience the next generation of digital clothing. Where innovation meets style.",
+    "shop_now": "Shop Now",
+    "view_lookbook": "View Lookbook",
+    "featured_collection": "Featured Collection",
+    "testimonials": "Customer Reviews",
+    "lookbook": "Style Gallery"
+  },
+  "accessibility": {
+    "previous": "Previous",
+    "next": "Next",
+    "close_modal": "Close modal",
+    "loading": "Loading..."
+  },
+  "date_formats": {
+    "month_day_year": "%B %d, %Y"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search our store...",
+    "results": "Search results",
+    "no_results": "No results found",
+    "view_all": "View all results"
+  },
+  "reviews": {
+    "verified_buyer": "Verified Buyer",
+    "stars": "Stars"
+  },
+  "size_chart": {
+    "size": "Size",
+    "chest": "Chest (in)",
+    "waist": "Waist (in)",
+    "hips": "Hips (in)"
+  }
+}

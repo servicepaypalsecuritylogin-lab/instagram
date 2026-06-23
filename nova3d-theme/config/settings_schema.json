@@ -1,0 +1,284 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "NOVA3D",
+    "theme_version": "1.0.0",
+    "theme_author": "NOVA3D Studio",
+    "theme_documentation_url": "https://nova3d.com/docs",
+    "theme_support_url": "https://nova3d.com/support"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary_neon",
+        "label": "Primary Neon Color",
+        "default": "#00f5ff"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary_neon",
+        "label": "Secondary Neon Color",
+        "default": "#bf00ff"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_neon",
+        "label": "Accent Neon Color",
+        "default": "#ff0080"
+      },
+      {
+        "type": "color",
+        "id": "color_neon_gold",
+        "label": "Neon Gold Color",
+        "default": "#ffd700"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background Color",
+        "default": "#050508"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Surface/Card Background",
+        "default": "#0d0d1a"
+      },
+      {
+        "type": "color",
+        "id": "color_text_primary",
+        "label": "Primary Text Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_text_secondary",
+        "label": "Secondary Text Color",
+        "default": "#a0a0b8"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading Font",
+        "default": "space_grotesk_n7"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body Font",
+        "default": "inter_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_mono",
+        "label": "Mono Font (Prices/Labels)",
+        "default": "jetbrains_mono_n4"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "layout_max_width",
+        "min": 1200,
+        "max": 1920,
+        "step": 40,
+        "unit": "px",
+        "label": "Max Content Width",
+        "default": 1440
+      },
+      {
+        "type": "range",
+        "id": "section_spacing",
+        "min": 40,
+        "max": 200,
+        "step": 10,
+        "unit": "px",
+        "label": "Section Spacing",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "section_spacing_mobile",
+        "min": 20,
+        "max": 100,
+        "step": 5,
+        "unit": "px",
+        "label": "Section Spacing (Mobile)",
+        "default": 60
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram URL",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok URL",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_twitter",
+        "label": "Twitter/X URL",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook URL",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_youtube",
+        "label": "YouTube URL",
+        "default": ""
+      }
+    ]
+  },
+  {
+    "name": "Announcement Bar",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "announcement_bar_enable",
+        "label": "Enable Announcement Bar",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "announcement_bar_message_1",
+        "label": "Message 1",
+        "default": "FREE SHIPPING ON ORDERS OVER $100"
+      },
+      {
+        "type": "text",
+        "id": "announcement_bar_message_2",
+        "label": "Message 2",
+        "default": "NEW COLLECTION DROP EVERY FRIDAY"
+      },
+      {
+        "type": "text",
+        "id": "announcement_bar_message_3",
+        "label": "Message 3",
+        "default": "USE CODE NOVA20 FOR 20% OFF"
+      },
+      {
+        "type": "color",
+        "id": "announcement_bar_bg",
+        "label": "Background Color",
+        "default": "#0d0d1a"
+      },
+      {
+        "type": "color",
+        "id": "announcement_bar_text",
+        "label": "Text Color",
+        "default": "#00f5ff"
+      }
+    ]
+  },
+  {
+    "name": "3D Effects & Particles",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "particles_enable",
+        "label": "Enable Particle Background",
+        "default": true,
+        "info": "Disable for better performance on slower devices"
+      },
+      {
+        "type": "checkbox",
+        "id": "three_d_enable",
+        "label": "Enable 3D Effects",
+        "default": true,
+        "info": "Includes Three.js animations and tilt effects"
+      },
+      {
+        "type": "checkbox",
+        "id": "cursor_effect_enable",
+        "label": "Enable Custom Cursor",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "particle_count",
+        "min": 50,
+        "max": 500,
+        "step": 50,
+        "label": "Particle Count",
+        "default": 200
+      }
+    ]
+  },
+  {
+    "name": "Cart Settings",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_drawer_enable",
+        "label": "Enable Cart Drawer",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_notes_enable",
+        "label": "Enable Cart Notes",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "cart_free_shipping_threshold",
+        "label": "Free Shipping Threshold",
+        "default": "100",
+        "info": "Amount for free shipping message"
+      }
+    ]
+  },
+  {
+    "name": "Product Settings",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "product_show_color_swatches",
+        "label": "Show Color Swatches on Collection",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "product_show_quick_add",
+        "label": "Show Quick Add Button",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "product_show_wishlist",
+        "label": "Show Wishlist Button",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "product_sticky_atc",
+        "label": "Enable Sticky Add to Cart Bar",
+        "default": true
+      }
+    ]
+  }
+]

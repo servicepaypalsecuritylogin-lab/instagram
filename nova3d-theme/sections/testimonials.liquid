@@ -1,0 +1,203 @@
+<section class="section testimonials">
+  <div class="container">
+    <h2 class="section__title text-center" style="margin-bottom: var(--spacing-2xl);">
+      <span class="gradient-text">{{ section.settings.heading }}</span>
+    </h2>
+    
+    <div class="testimonials-carousel">
+      <div class="testimonials-track">
+        {% for block in section.blocks %}
+          <div class="testimonial-card glass-card">
+            <div class="testimonial-card__rating">
+              {% assign stars = block.settings.rating | default: 5 %}
+              {% for i in (1..5) %}
+                {% if i <= stars %}
+                  <svg class="testimonial-card__star" viewBox="0 0 24 24">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                {% else %}
+                  <svg class="testimonial-card__star empty" viewBox="0 0 24 24">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                {% endif %}
+              {% endfor %}
+            </div>
+            
+            <p class="testimonial-card__text">"{{ block.settings.review }}"</p>
+            
+            <div class="testimonial-card__author">
+              {% if block.settings.customer_image != blank %}
+                <img 
+                  src="{{ block.settings.customer_image | image_url: width: 100 }}"
+                  alt="{{ block.settings.customer_name }}"
+                  class="testimonial-card__avatar"
+                  width="50"
+                  height="50"
+                >
+              {% else %}
+                <div class="testimonial-card__avatar" style="background: linear-gradient(135deg, #00f5ff, #bf00ff); display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                  {{ block.settings.customer_name | slice: 0 }}
+                </div>
+              {% endif %}
+              
+              <div>
+                <div class="testimonial-card__name">{{ block.settings.customer_name }}</div>
+                {% if block.settings.verified_purchase %}
+                  <div class="testimonial-card__verified">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Verified Buyer
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <!-- Placeholder testimonials -->
+          {% for i in (1..4) %}
+            <div class="testimonial-card glass-card">
+              <div class="testimonial-card__rating">
+                {% for j in (1..5) %}
+                  <svg class="testimonial-card__star" viewBox="0 0 24 24">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                {% endfor %}
+              </div>
+              <p class="testimonial-card__text">"Absolutely love this! The quality is incredible and the fit is perfect. Will definitely be ordering more."</p>
+              <div class="testimonial-card__author">
+                <div class="testimonial-card__avatar" style="background: linear-gradient(135deg, #00f5ff, #bf00ff); display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                  {{ 'Alex Jordan Sam Pat' | split: ' ' | slice: i | first | slice: 0 }}
+                </div>
+                <div>
+                  <div class="testimonial-card__name">{{ 'Alex Jordan Sam Pat' | split: ' ' | slice: i | first }}</div>
+                  <div class="testimonial-card__verified">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Verified Buyer
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endfor %}
+        
+        <!-- Duplicate for infinite scroll effect -->
+        {% for block in section.blocks %}
+          <div class="testimonial-card glass-card">
+            <div class="testimonial-card__rating">
+              {% assign stars = block.settings.rating | default: 5 %}
+              {% for i in (1..5) %}
+                {% if i <= stars %}
+                  <svg class="testimonial-card__star" viewBox="0 0 24 24">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                {% else %}
+                  <svg class="testimonial-card__star empty" viewBox="0 0 24 24">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                {% endif %}
+              {% endfor %}
+            </div>
+            
+            <p class="testimonial-card__text">"{{ block.settings.review }}"</p>
+            
+            <div class="testimonial-card__author">
+              {% if block.settings.customer_image != blank %}
+                <img 
+                  src="{{ block.settings.customer_image | image_url: width: 100 }}"
+                  alt="{{ block.settings.customer_name }}"
+                  class="testimonial-card__avatar"
+                  width="50"
+                  height="50"
+                >
+              {% else %}
+                <div class="testimonial-card__avatar" style="background: linear-gradient(135deg, #00f5ff, #bf00ff); display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                  {{ block.settings.customer_name | slice: 0 }}
+                </div>
+              {% endif %}
+              
+              <div>
+                <div class="testimonial-card__name">{{ block.settings.customer_name }}</div>
+                {% if block.settings.verified_purchase %}
+                  <div class="testimonial-card__verified">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Verified Buyer
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Customer Reviews"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "customer_name",
+          "label": "Customer Name",
+          "default": "John Doe"
+        },
+        {
+          "type": "image_picker",
+          "id": "customer_image",
+          "label": "Customer Photo"
+        },
+        {
+          "type": "textarea",
+          "id": "review",
+          "label": "Review Text",
+          "default": "Amazing product! Highly recommend."
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star Rating",
+          "default": 5
+        },
+        {
+          "type": "checkbox",
+          "id": "verified_purchase",
+          "label": "Verified Purchase Badge",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,54 @@
+{%- if section.settings.enable -%}
+<div class="announcement-bar">
+  <div class="announcement-bar__marquee">
+    <div class="announcement-bar__content">
+      {%- for i in (1..3) -%}
+        {%- assign message_setting = 'message_' | append: i -%}
+        {%- if section.settings[message_setting] != blank -%}
+          <span class="announcement-bar__message">{{ section.settings[message_setting] }}</span>
+          {%- unless forloop.last -%}
+            <span class="announcement-bar__separator">✦</span>
+          {%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable",
+      "label": "Enable Announcement Bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "message_1",
+      "label": "Message 1",
+      "default": "FREE SHIPPING ON ORDERS OVER $100"
+    },
+    {
+      "type": "text",
+      "id": "message_2",
+      "label": "Message 2",
+      "default": "NEW COLLECTION DROP EVERY FRIDAY"
+    },
+    {
+      "type": "text",
+      "id": "message_3",
+      "label": "Message 3",
+      "default": "USE CODE NOVA20 FOR 20% OFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar"
+    }
+  ]
+}
+{% endschema %}

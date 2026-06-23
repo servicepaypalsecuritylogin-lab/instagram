@@ -1,0 +1,109 @@
+<section class="section lookbook">
+  <div class="container">
+    <h2 class="section__title text-center" style="margin-bottom: var(--spacing-2xl);">
+      <span class="gradient-text">{{ section.settings.heading }}</span>
+    </h2>
+    
+    <div class="masonry">
+      {% for block in section.blocks %}
+        <div class="masonry__item">
+          <a href="{{ block.settings.product_link }}" style="display: block;">
+            <img 
+              src="{{ block.settings.image | image_url: width: 600 }}"
+              alt="{{ block.settings.image.alt | default: 'Lookbook image' }}"
+              class="masonry__image lazy-image"
+              loading="lazy"
+              width="600"
+            >
+            
+            <div class="masonry__overlay">
+              {% if block.settings.tags != blank %}
+                <div class="masonry__tags">
+                  {% assign tags = block.settings.tags | split: ',' %}
+                  {% for tag in tags %}
+                    <span class="masonry__tag">{{ tag | strip }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+              
+              <button class="btn btn-neon btn-full">Shop This Look</button>
+            </div>
+          </a>
+        </div>
+      {% else %}
+        <!-- Placeholder images -->
+        {% for i in (1..6) %}
+          <div class="masonry__item">
+            <a href="#" style="display: block;">
+              <img 
+                src="//via.placeholder.com/600x{{ 400 | plus: i | times: 50 }}/0d0d1a/00f5ff?text=Look+{{ i }}"
+                alt="Look {{ i }}"
+                class="masonry__image lazy-image"
+                loading="lazy"
+                width="600"
+              >
+              <div class="masonry__overlay">
+                <div class="masonry__tags">
+                  <span class="masonry__tag">NEW</span>
+                  <span class="masonry__tag">TRENDING</span>
+                </div>
+                <button class="btn btn-neon btn-full">Shop This Look</button>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lookbook",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Style Gallery"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "product_link",
+          "label": "Product Link"
+        },
+        {
+          "type": "text",
+          "id": "tags",
+          "label": "Tags (comma separated)",
+          "default": "NEW, TRENDING"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lookbook",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

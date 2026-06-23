@@ -1,0 +1,172 @@
+<section class="section featured-collection">
+  <div class="container">
+    <h2 class="section__title text-center">
+      <span class="gradient-text">{{ section.settings.heading }}</span>
+    </h2>
+    
+    {% assign collection = collections[section.settings.collection] %}
+    
+    <div class="product-grid grid grid--cols-4">
+      {% for product in collection.products limit: section.settings.products_count %}
+        <div class="product-card tilt-card">
+          <!-- Badge -->
+          {% if product.tags contains 'NEW' %}
+            <span class="product-card__badge product-card__badge--new">New</span>
+          {% elsif product.compare_at_price > product.price %}
+            <span class="product-card__badge product-card__badge--sale">Sale</span>
+          {% elsif product.tags contains 'HOT' %}
+            <span class="product-card__badge product-card__badge--hot">Hot</span>
+          {% endif %}
+          
+          <!-- Wishlist Button -->
+          {% if section.settings.show_wishlist %}
+            <button class="product-card__wishlist" aria-label="Add to wishlist">
+              <svg viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          {% endif %}
+          
+          <!-- Image -->
+          <a href="{{ product.url }}" class="product-card__image-wrapper">
+            <img 
+              src="{{ product.featured_media | image_url: width: 600 }}"
+              alt="{{ product.title }}"
+              class="product-card__image lazy-image"
+              loading="lazy"
+              width="600"
+              height="600"
+            >
+          </a>
+          
+          <!-- Quick Add -->
+          {% if section.settings.show_quick_add %}
+            <div class="product-card__quick-add">
+              <form data-add-to-cart class="quick-add-form">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button type="submit" class="btn btn-neon btn-full">Quick Add</button>
+              </form>
+            </div>
+          {% endif %}
+          
+          <!-- Info -->
+          <div class="product-card__info">
+            <h3 class="product-card__title">
+              <a href="{{ product.url }}">{{ product.title }}</a>
+            </h3>
+            
+            <div class="product-card__price">
+              {% if product.compare_at_price > product.price %}
+                <span class="product-card__compare-price">{{ product.compare_at_price | money }}</span>
+                <span class="product-card__price--sale">{{ product.price | money }}</span>
+              {% else %}
+                {{ product.price | money }}
+              {% endif %}
+            </div>
+            
+            <!-- Color Swatches -->
+            {% if section.settings.show_color_swatches and product.available_variants.size > 1 %}
+              <div class="product-card__swatches">
+                {% for variant in product.variants limit: 4 %}
+                  <button 
+                    class="product-card__swatch"
+                    style="background-color: {{ variant.option1 | handleize | replace: '-', '' }};"
+                    data-product-id="{{ product.id }}"
+                    data-color="{{ variant.option1 }}"
+                    aria-label="{{ variant.option1 }}"
+                  ></button>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% else %}
+        <!-- Placeholder products if no collection selected -->
+        {% for i in (1..4) %}
+          <div class="product-card tilt-card">
+            <span class="product-card__badge product-card__badge--new">New</span>
+            <a href="#" class="product-card__image-wrapper">
+              <img 
+                src="//via.placeholder.com/600x600/0d0d1a/00f5ff?text=Product+{{ i }}"
+                alt="Product {{ i }}"
+                class="product-card__image lazy-image"
+                loading="lazy"
+                width="600"
+                height="600"
+              >
+            </a>
+            <div class="product-card__info">
+              <h3 class="product-card__title">
+                <a href="#">NOVA3D Product {{ i }}</a>
+              </h3>
+              <div class="product-card__price">$99.00</div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+    
+    {% if section.settings.show_view_all and collection.all_products_count > section.settings.products_count %}
+      <div class="text-center" style="margin-top: var(--spacing-2xl);">
+        <a href="{{ collection.url }}" class="btn btn-glow">View All Products</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_count",
+      "min": 4,
+      "max": 12,
+      "step": 4,
+      "label": "Number of Products",
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_color_swatches",
+      "label": "Show Color Swatches",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "Show Quick Add Button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "Show Wishlist Button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show View All Button",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection"
+    }
+  ]
+}
+{% endschema %}

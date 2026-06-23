@@ -1,0 +1,20 @@
+<section class="page-404">
+  <div class="container">
+    <h1 class="page-404__number">404</h1>
+    <h2 class="page-404__title gradient-text">Page Not Found</h2>
+    <p class="page-404__text">The page you're looking for doesn't exist or has been moved.</p>
+    <a href="/" class="btn btn-neon">Back to Home</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404 Page",
+  "settings": [],
+  "presets": [
+    {
+      "name": "404 Page"
+    }
+  ]
+}
+{% endschema %}
