@@ -1,0 +1,133 @@
+<section class="section cart-page">
+  <div class="container">
+    <h1 style="margin-bottom: var(--spacing-2xl);">Your Cart</h1>
+    
+    {% if cart.item_count > 0 %}
+      <div class="cart-page__grid">
+        <!-- Cart Items -->
+        <div class="cart-page__items">
+          {% for item in cart.items %}
+            <div class="cart-page__item">
+              <img 
+                src="{{ item.image | image_url: width: 200 }}"
+                alt="{{ item.title }}"
+                class="cart-page__item-image"
+                loading="lazy"
+              >
+              
+              <div class="cart-page__item-details">
+                <h3 class="cart-page__item-title">{{ item.product.title }}</h3>
+                <p class="cart-page__item-variant">{{ item.variant.title }}</p>
+                
+                <div class="quantity-selector">
+                  <button type="button" class="quantity-btn" onclick="this.closest('form').querySelector('[name^=updates]').stepDown(); this.closest('form').submit();">-</button>
+                  <input type="number" name="updates[{{ item.key }}]" value="{{ item.quantity }}" min="0" class="quantity-input">
+                  <button type="button" class="quantity-btn" onclick="this.closest('form').querySelector('[name^=updates]').stepUp(); this.closest('form').submit();">+</button>
+                </div>
+              </div>
+              
+              <div style="text-align: right;">
+                <div class="cart-page__item-price">{{ item.line_price | money }}</div>
+                <a href="/cart/change?line={{ forloop.index }}&quantity=0" class="cart-item__remove" style="display: block; margin-top: var(--spacing-sm);">Remove</a>
+              </div>
+            </div>
+          {% endfor %}
+          
+          <form action="/cart/update" method="post" style="margin-top: var(--spacing-xl);">
+            <button type="submit" class="btn btn-outline">Update Cart</button>
+          </form>
+        </div>
+        
+        <!-- Order Summary -->
+        <div class="cart-page__summary">
+          <h2 class="cart-page__summary-title">Order Summary</h2>
+          
+          <div class="cart-page__summary-row">
+            <span>Subtotal</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+          
+          <div class="cart-page__summary-row">
+            <span>Shipping</span>
+            <span>Calculated at checkout</span>
+          </div>
+          
+          {% if cart.total_discount > 0 %}
+            <div class="cart-page__summary-row" style="color: var(--color-accent-neon);">
+              <span>Discount</span>
+              <span>-{{ cart.total_discount | money }}</span>
+            </div>
+          {% endif %}
+          
+          <div class="discount-field">
+            <input type="text" name="discount" class="discount-input" placeholder="Discount code">
+            <button type="button" class="btn btn-glow">Apply</button>
+          </div>
+          
+          <div class="cart-page__summary-row" style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: var(--spacing-md); margin-top: var(--spacing-md);">
+            <span style="font-size: 1.25rem; font-weight: 700;">Total</span>
+            <span class="cart-page__summary-total">{{ cart.total_price | money }}</span>
+          </div>
+          
+          <button type="submit" name="checkout" class="btn btn-neon btn-full cart-page__checkout-btn">
+            Checkout
+          </button>
+          
+          <a href="/collections/all" class="cart-drawer__continue" style="display: block; text-align: center; margin-top: var(--spacing-md);">
+            Continue Shopping
+          </a>
+        </div>
+      </div>
+      
+      <!-- Cart Upsell -->
+      <div class="cart-upsell">
+        <h3 class="cart-upsell__title">You Might Also Like</h3>
+        <div class="product-grid grid grid--cols-4">
+          {% assign upsell_collection = collections['all'] %}
+          {% for product in upsell_collection.products limit: 4 %}
+            {% unless product.id == cart.items.first.product.id %}
+              <div class="product-card">
+                <a href="{{ product.url }}" class="product-card__image-wrapper">
+                  <img 
+                    src="{{ product.featured_media | image_url: width: 600 }}"
+                    alt="{{ product.title }}"
+                    class="product-card__image lazy-image"
+                    loading="lazy"
+                  >
+                </a>
+                <div class="product-card__info">
+                  <h3 class="product-card__title">{{ product.title }}</h3>
+                  <div class="product-card__price">{{ product.price | money }}</div>
+                </div>
+              </div>
+            {% endunless %}
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <!-- Empty Cart -->
+      <div class="empty-state">
+        <svg class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <h2 class="empty-state__title">Your cart is empty</h2>
+        <p class="empty-state__text">Looks like you haven't added anything to your cart yet.</p>
+        <a href="/collections/all" class="btn btn-neon">Start Shopping</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart Page",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Cart Page"
+    }
+  ]
+}
+{% endschema %}

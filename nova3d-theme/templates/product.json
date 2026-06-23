@@ -1,0 +1,14 @@
+{%- section 'product-main' -%}
+
+{% schema %}
+{
+  "name": "Product Page",
+  "settings": [],
+  "sections": {
+    "main": {
+      "type": "product-main"
+    }
+  },
+  "order": ["main"]
+}
+{% endschema %}

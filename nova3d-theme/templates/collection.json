@@ -1,0 +1,14 @@
+{%- section 'collection-main' -%}
+
+{% schema %}
+{
+  "name": "Collection Page",
+  "settings": [],
+  "sections": {
+    "main": {
+      "type": "collection-main"
+    }
+  },
+  "order": ["main"]
+}
+{% endschema %}

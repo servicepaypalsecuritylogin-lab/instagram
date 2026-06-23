@@ -1,0 +1,56 @@
+{
+  "current": {
+    "colors": {
+      "color_primary_neon": "#00f5ff",
+      "color_secondary_neon": "#bf00ff",
+      "color_accent_neon": "#ff0080",
+      "color_neon_gold": "#ffd700",
+      "color_background": "#050508",
+      "color_surface": "#0d0d1a",
+      "color_text_primary": "#ffffff",
+      "color_text_secondary": "#a0a0b8"
+    },
+    "typography": {
+      "font_heading": "space_grotesk_n7",
+      "font_body": "inter_n4",
+      "font_mono": "jetbrains_mono_n4"
+    },
+    "layout": {
+      "layout_max_width": 1440,
+      "section_spacing": 100,
+      "section_spacing_mobile": 60
+    },
+    "social": {
+      "social_instagram": "",
+      "social_tiktok": "",
+      "social_twitter": "",
+      "social_facebook": "",
+      "social_youtube": ""
+    },
+    "announcement_bar": {
+      "announcement_bar_enable": true,
+      "announcement_bar_message_1": "FREE SHIPPING ON ORDERS OVER $100",
+      "announcement_bar_message_2": "NEW COLLECTION DROP EVERY FRIDAY",
+      "announcement_bar_message_3": "USE CODE NOVA20 FOR 20% OFF",
+      "announcement_bar_bg": "#0d0d1a",
+      "announcement_bar_text": "#00f5ff"
+    },
+    "3d_effects": {
+      "particles_enable": true,
+      "three_d_enable": true,
+      "cursor_effect_enable": true,
+      "particle_count": 200
+    },
+    "cart": {
+      "cart_drawer_enable": true,
+      "cart_notes_enable": true,
+      "cart_free_shipping_threshold": "100"
+    },
+    "product": {
+      "product_show_color_swatches": true,
+      "product_show_quick_add": true,
+      "product_show_wishlist": true,
+      "product_sticky_atc": true
+    }
+  }
+}

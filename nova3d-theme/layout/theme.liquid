@@ -1,0 +1,339 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#050508">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {% render 'meta-tags' %}
+
+    {{ content_for_header }}
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- GSAP + ScrollTrigger CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Theme CSS -->
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+    <!-- Theme JS -->
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      
+      // Apply theme settings as CSS variables
+      document.documentElement.style.setProperty('--color-primary-neon', '{{ settings.color_primary_neon }}');
+      document.documentElement.style.setProperty('--color-secondary-neon', '{{ settings.color_secondary_neon }}');
+      document.documentElement.style.setProperty('--color-accent-neon', '{{ settings.color_accent_neon }}');
+      document.documentElement.style.setProperty('--color-background', '{{ settings.color_background }}');
+      document.documentElement.style.setProperty('--color-surface', '{{ settings.color_surface }}');
+      document.documentElement.style.setProperty('--section-spacing', '{{ settings.section_spacing }}px');
+      document.documentElement.style.setProperty('--section-spacing-mobile', '{{ settings.section_spacing_mobile }}px');
+      document.documentElement.style.setProperty('--layout-max-width', '{{ settings.layout_max_width }}px');
+    </script>
+  </head>
+
+  <body class="template-{{ template.name }}">
+    <!-- Particle Background Canvas -->
+    {% if settings.particles_enable %}
+      <canvas id="particles-canvas"></canvas>
+    {% endif %}
+
+    <!-- Scanline Overlay -->
+    <div class="scanline-overlay"></div>
+
+    <!-- Custom Cursor -->
+    {% if settings.cursor_effect_enable %}
+      <div class="custom-cursor"></div>
+      <div class="custom-cursor-dot"></div>
+    {% endif %}
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay"></div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu__overlay"></div>
+
+    <a class="skip-to-content-link sr-only" href="#MainContent">
+      {{ 'accessibility.skip_to_content' | t }}
+    </a>
+
+    {% section 'announcement-bar' %}
+
+    <header class="header glass-nav" role="banner">
+      <div class="header__inner">
+        <!-- Mobile Menu Toggle -->
+        <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <!-- Logo -->
+        <a href="/" class="logo">
+          <span class="logo__glow"></span>
+          {{ shop.name | default: 'NOVA3D' }}
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="nav" role="navigation">
+          <a href="/" class="nav__link">{{ 'navigation.home' | t | default: 'Home' }}</a>
+          <a href="/collections/all" class="nav__link">{{ 'navigation.shop' | t | default: 'Shop' }}</a>
+          <a href="/pages/lookbook" class="nav__link">{{ 'navigation.lookbook' | t | default: 'Lookbook' }}</a>
+          <a href="/pages/about" class="nav__link">{{ 'navigation.about' | t | default: 'About' }}</a>
+        </nav>
+
+        <!-- Header Icons -->
+        <div class="header__icons">
+          <!-- Search Icon -->
+          <button class="header__icon" aria-label="Search" data-search-toggle>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </button>
+
+          <!-- Wishlist Icon -->
+          <a href="/pages/wishlist" class="header__icon" aria-label="Wishlist">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </a>
+
+          <!-- Cart Icon -->
+          <button class="header__icon" aria-label="Cart" data-cart-open>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="header__cart-count">{{ cart.item_count }}</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+      <nav class="mobile-menu__nav">
+        <a href="/" class="mobile-menu__link">Home</a>
+        <a href="/collections/all" class="mobile-menu__link">Shop All</a>
+        <a href="/collections/new" class="mobile-menu__link">New Arrivals</a>
+        <a href="/pages/lookbook" class="mobile-menu__link">Lookbook</a>
+        <a href="/pages/about" class="mobile-menu__link">About</a>
+        <a href="/pages/contact" class="mobile-menu__link">Contact</a>
+      </nav>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div class="cart-drawer">
+      <div class="cart-drawer__header">
+        <h2 class="cart-drawer__title">Your Cart</h2>
+        <button class="cart-drawer__close" data-cart-close aria-label="Close cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="cart-drawer__items">
+        <!-- Cart items will be loaded here via AJAX -->
+      </div>
+      <div class="cart-drawer__footer">
+        <div class="cart-drawer__subtotal">
+          <span>Subtotal</span>
+          <span class="cart-drawer__subtotal-value">{{ cart.total_price | money }}</span>
+        </div>
+        <button class="btn btn-neon btn-full cart-drawer__checkout">Checkout</button>
+        <a href="/cart" class="cart-drawer__continue">View full cart</a>
+      </div>
+    </div>
+
+    <main id="MainContent" role="main">
+      {{ content_for_layout }}
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" aria-label="Back to top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m18 15-6-6-6 6"></path>
+      </svg>
+    </button>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div class="footer__grid">
+          <!-- Brand Column -->
+          <div class="footer__brand">
+            <div class="footer__logo">NOVA3D</div>
+            <p class="footer__description">
+              Premium 3D clothing brand pushing the boundaries of digital fashion. 
+              Where technology meets style.
+            </p>
+            <div class="footer__social">
+              {% if settings.social_instagram %}
+                <a href="{{ settings.social_instagram }}" class="footer__social-link" aria-label="Instagram">
+                  <svg viewBox="0 0 24 24"><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect></svg>
+                </a>
+              {% endif %}
+              {% if settings.social_tiktok %}
+                <a href="{{ settings.social_tiktok }}" class="footer__social-link" aria-label="TikTok">
+                  <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+                </a>
+              {% endif %}
+              {% if settings.social_twitter %}
+                <a href="{{ settings.social_twitter }}" class="footer__social-link" aria-label="Twitter">
+                  <svg viewBox="0 0 24 24"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                </a>
+              {% endif %}
+              {% if settings.social_facebook %}
+                <a href="{{ settings.social_facebook }}" class="footer__social-link" aria-label="Facebook">
+                  <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Shop Column -->
+          <div class="footer__column">
+            <h3 class="footer__heading">Shop</h3>
+            <div class="footer__links">
+              <a href="/collections/all" class="footer__link">All Products</a>
+              <a href="/collections/new" class="footer__link">New Arrivals</a>
+              <a href="/collections/bestsellers" class="footer__link">Bestsellers</a>
+              <a href="/collections/sale" class="footer__link">Sale</a>
+            </div>
+          </div>
+
+          <!-- Support Column -->
+          <div class="footer__column">
+            <h3 class="footer__heading">Support</h3>
+            <div class="footer__links">
+              <a href="/pages/faq" class="footer__link">FAQ</a>
+              <a href="/pages/shipping" class="footer__link">Shipping</a>
+              <a href="/pages/returns" class="footer__link">Returns</a>
+              <a href="/pages/contact" class="footer__link">Contact Us</a>
+            </div>
+          </div>
+
+          <!-- Newsletter Column -->
+          <div class="footer__column">
+            <h3 class="footer__heading">Newsletter</h3>
+            <p class="footer__description" style="margin-bottom: 1rem;">
+              Subscribe for exclusive drops and early access.
+            </p>
+            <form class="newsletter-form" action="/contact#newsletter-form" method="post">
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <label for="newsletter-email" class="sr-only">Email</label>
+              <input 
+                type="email" 
+                id="newsletter-email" 
+                name="contact[email]" 
+                class="newsletter-input" 
+                placeholder="Enter your email"
+                required
+              >
+              <button type="submit" class="btn btn-neon">Join</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer__bottom">
+          <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+          <div class="footer__payment">
+            <!-- Payment icons would go here -->
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Size Guide Modal -->
+    <div class="modal modal--size-guide">
+      <div class="modal__content">
+        <div class="modal__header">
+          <h3 class="modal__title">Size Guide</h3>
+          <button class="modal__close" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 6 6 18"></path>
+              <path d="m6 6 12 12"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="modal__body">
+          <table class="size-guide-table">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Chest (in)</th>
+                <th>Waist (in)</th>
+                <th>Hips (in)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>XS</td>
+                <td>32-34</td>
+                <td>24-26</td>
+                <td>34-36</td>
+              </tr>
+              <tr>
+                <td>S</td>
+                <td>34-36</td>
+                <td>26-28</td>
+                <td>36-38</td>
+              </tr>
+              <tr>
+                <td>M</td>
+                <td>38-40</td>
+                <td>30-32</td>
+                <td>40-42</td>
+              </tr>
+              <tr>
+                <td>L</td>
+                <td>42-44</td>
+                <td>34-36</td>
+                <td>44-46</td>
+              </tr>
+              <tr>
+                <td>XL</td>
+                <td>46-48</td>
+                <td>38-40</td>
+                <td>48-50</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

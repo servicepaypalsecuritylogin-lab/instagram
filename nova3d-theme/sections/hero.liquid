@@ -1,0 +1,72 @@
+<section class="hero">
+  <div class="hero__canvas"></div>
+  <div class="hero__content">
+    <h1 class="hero__title gradient-text">{{ section.settings.heading }}</h1>
+    <p class="hero__subtitle">{{ section.settings.subheading }}</p>
+    <div class="hero__buttons">
+      {% if section.settings.button_label != blank %}
+        <a href="{{ section.settings.button_link }}" class="btn btn-neon">
+          {{ section.settings.button_label }}
+        </a>
+      {% endif %}
+      {% if section.settings.button_label_2 != blank %}
+        <a href="{{ section.settings.button_link_2 }}" class="btn btn-glow">
+          {{ section.settings.button_label_2 }}
+        </a>
+      {% endif %}
+    </div>
+    <div class="hero__scroll-indicator">
+      <span class="hero__scroll-text">Scroll</span>
+      <svg class="hero__scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M19 12l-7 7-7-7"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "FUTURE OF FASHION"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Experience the next generation of digital clothing. Where innovation meets style."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button 1 Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Button 2 Label",
+      "default": "View Lookbook"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Button 2 Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

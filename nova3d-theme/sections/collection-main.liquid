@@ -1,0 +1,115 @@
+<section class="section collection-main">
+  <div class="container">
+    <h1 class="collection__title" style="margin-bottom: var(--spacing-xl);">{{ collection.title }}</h1>
+    
+    {% if collection.description != blank %}
+      <div class="collection__description" style="color: var(--color-text-secondary); margin-bottom: var(--spacing-xl);">
+        {{ collection.description }}
+      </div>
+    {% endif %}
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-xl); gap: var(--spacing-lg); flex-wrap: wrap;">
+      <!-- Product Count -->
+      <span style="color: var(--color-text-secondary);">
+        {{ collection.products_count }} products
+      </span>
+      
+      <!-- Sort Dropdown -->
+      <div class="sort-dropdown">
+        <button class="sort-dropdown__trigger">
+          <span>Sort by: {{ collection.sort_by | default: 'Featured' }}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <div class="sort-dropdown__options">
+          <button class="sort-dropdown__option" data-value="manual">Featured</button>
+          <button class="sort-dropdown__option" data-value="best-selling">Best Selling</button>
+          <button class="sort-dropdown__option" data-value="title-ascending">A-Z</button>
+          <button class="sort-dropdown__option" data-value="price-ascending">Price: Low to High</button>
+          <button class="sort-dropdown__option" data-value="price-descending">Price: High to Low</button>
+          <button class="sort-dropdown__option" data-value="created-descending">Newest</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="product-grid grid grid--cols-4">
+      {% for product in collection.products %}
+        <div class="product-card tilt-card">
+          {% if product.tags contains 'NEW' %}
+            <span class="product-card__badge product-card__badge--new">New</span>
+          {% elsif product.compare_at_price > product.price %}
+            <span class="product-card__badge product-card__badge--sale">Sale</span>
+          {% endif %}
+          
+          <button class="product-card__wishlist" aria-label="Add to wishlist">
+            <svg viewBox="0 0 24 24">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </button>
+          
+          <a href="{{ product.url }}" class="product-card__image-wrapper">
+            <img 
+              src="{{ product.featured_media | image_url: width: 600 }}"
+              alt="{{ product.title }}"
+              class="product-card__image lazy-image"
+              loading="lazy"
+              width="600"
+              height="600"
+            >
+          </a>
+          
+          <div class="product-card__quick-add">
+            <form data-add-to-cart>
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <button type="submit" class="btn btn-neon btn-full">Quick Add</button>
+            </form>
+          </div>
+          
+          <div class="product-card__info">
+            <h3 class="product-card__title">
+              <a href="{{ product.url }}">{{ product.title }}</a>
+            </h3>
+            
+            <div class="product-card__price">
+              {% if product.compare_at_price > product.price %}
+                <span class="product-card__compare-price">{{ product.compare_at_price | money }}</span>
+                <span class="product-card__price--sale">{{ product.price | money }}</span>
+              {% else %}
+                {{ product.price | money }}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <!-- Empty State -->
+        <div class="empty-state" style="grid-column: 1 / -1;">
+          <svg class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <h3 class="empty-state__title">No products found</h3>
+          <p class="empty-state__text">Try adjusting your filters or check back later.</p>
+          <a href="/collections/all" class="btn btn-glow">View All Products</a>
+        </div>
+      {% endfor %}
+    </div>
+    
+    {% if collection.products_count > 12 %}
+      <button class="btn btn-outline load-more">Load More</button>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Main",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Collection Main"
+    }
+  ]
+}
+{% endschema %}

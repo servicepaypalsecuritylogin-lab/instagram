@@ -1,0 +1,94 @@
+<section class="section 3d-product-showcase">
+  <div class="container">
+    <div class="product-showcase__grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-2xl); align-items: center;">
+      <!-- 3D Canvas -->
+      <div class="product-showcase__canvas-wrapper" style="position: relative; height: 500px;">
+        <div class="product-showcase__canvas"></div>
+      </div>
+      
+      <!-- Product Info -->
+      <div class="product-showcase__info">
+        <h2 class="gradient-text" style="margin-bottom: var(--spacing-lg);">{{ section.settings.heading }}</h2>
+        
+        {% for block in section.blocks %}
+          <div class="feature-bullet" style="display: flex; gap: var(--spacing-md); margin-bottom: var(--spacing-md);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00f5ff" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>{{ block.settings.text }}</span>
+          </div>
+        {% endfor %}
+        
+        {% if section.settings.product_link != blank %}
+          <a href="{{ section.settings.product_link }}" class="btn btn-neon" style="margin-top: var(--spacing-xl);">
+            {{ section.settings.button_label | default: 'Shop the Look' }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "3D Product Showcase",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Experience 3D Fashion"
+    },
+    {
+      "type": "url",
+      "id": "product_link",
+      "label": "Product Link"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop the Look"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Bullet",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Premium quality materials"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "3D Product Showcase",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Innovative 3D design technology"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Sustainable production methods"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Limited edition releases"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,14 @@
+{%- section 'cart-main' -%}
+
+{% schema %}
+{
+  "name": "Cart Page",
+  "settings": [],
+  "sections": {
+    "main": {
+      "type": "cart-main"
+    }
+  },
+  "order": ["main"]
+}
+{% endschema %}

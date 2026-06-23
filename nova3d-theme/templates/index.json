@@ -1,0 +1,7 @@
+{%- section 'announcement-bar' -%}
+{%- section 'hero' -%}
+{%- section 'featured-collection' -%}
+{%- section '3d-product-showcase' -%}
+{%- section 'lookbook' -%}
+{%- section 'testimonials' -%}
+{%- section 'newsletter' -%}
